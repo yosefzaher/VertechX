@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        {% block title %}My Website{% endblock %}
+    </title>
+
+    <style>
+        /* Navbar Links Hover and Active Animation */
+        .navbar-nav .nav-link {
+            padding: 0.5rem 1.25rem;
+            font-weight: 500;
+            color: #555;
+            transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+            position: relative;
+            margin-right: 20px;
+        }
+    
+        .navbar-nav .nav-link:last-child {
+            margin-right: 0;
+        }
+    
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: transparent;
+            transform: scaleX(0);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+    
+        .navbar-nav .nav-link:hover {
+            color: #fff;
+            background-color: #3a8de6;
+            border-radius: 5px;
+            transform: scale(1.05);
+        }
+    
+        .navbar-nav .nav-link:hover::after {
+            background-color: #fff;
+            transform: scaleX(1);
+        }
+    
+        .navbar-nav .nav-link.active {
+            color: #3a8de6;
+        }
+    
+        .navbar-nav .nav-link.active::after {
+            background-color: #3a8de6;
+            transform: scaleX(1);
+        }
+    
+        .btn-icon-only {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #555;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+    
+        .btn-icon-only:hover, .btn-icon-only:focus {
+            background-color: #3a8de6;
+            color: white;
+            transform: scale(1.1);
+        }
+    
+        @media (max-width: 992px) {
+            .navbar-nav .nav-link {
+                margin-right: 10px;
+            }
+            .navbar-nav .nav-link, .btn-icon-only {
+                margin-bottom: 10px;
+            }
+            .navbar-nav .ml-auto button {
+                margin-left: 10px;
+            }
+            .ml-auto {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .btn-icon-only {
+                margin-top: 10px;
+            }
+        }
+    
+        /* Alert styles */
+        .alert {
+            padding: 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: none;
+        }
+    
+        .alert .close {
+            color: #000;
+            font-size: 1.5rem;
+            top: -4px;
+        }
+    
+        .alert-danger {
+            background-color: #ffdddd;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+    
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+    
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    
+        .alert-dismissible {
+            padding-right: 2.5rem;
+        }
+        
+        .alert {
+            opacity: 0;
+            transform: translateY(-10px);
+            animation: slideIn 0.5s forwards;
+        }
+    
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        .alert i {
+            margin-right: 10px;
+        }
+    
+        /* Custom Styling for the Navbar */
+        .navbar-nav .nav-item {
+            margin-right: 20px; /* Adjust this if needed */
+        }
+    
+        .navbar-nav .nav-item .dropdown {
+            margin-left: 20px; /* Adds spacing between the Dashboard button and Profile */
+        }
+    
+        /* Specifically added for larger space between dashboard and profile */
+        .navbar-nav .nav-item {
+            margin-right: 20px; /* Adds space between items */
+        }
+    
+        /* Spacing for Dashboard and Profile dropdown */
+        .navbar-nav .nav-item .dropdown {
+            margin-left: 40px; /* Additional space for profile menu */
+        }
+    
+        /* Button spacing */
+        .navbar-nav .btn {
+            margin-left: 10px; /* Adjust the margin for the buttons */
+        }
+    </style>
+    
+</head>
+
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://placehold.co/120x50?text=VerTechX+logo" alt="Logo of VerTechX" class="d-inline-block align-top">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'About_Page' %}active{% endif %}" href="{{ url_for('About_Page') }}">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'VM_Page' %}active{% endif %}" href="{{ url_for('VM_Page') }}">V&M</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'Features_Page' %}active{% endif %}" href="{{ url_for('Features_Page') }}">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'Integration_Page' %}active{% endif %}" href="{{ url_for('Integration_Page') }}">Integration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'Home_Page' %}active{% endif %}" href="{{ url_for('Home_Page') }}">Home</a>
+                    </li>
+                </ul>
+                {% if current_user.is_authenticated %}
+                    <ul class="navbar-nav ml-auto align-items-center">
+                        <!-- Dashboard button for authenticated users -->
+                        <li class="nav-item">
+                            <a href="#" class="btn btn-success ml-3">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        </li>
+                
+                        <!-- User welcome and profile picture (optional) -->
+                        <li class="nav-item dropdown ml-4"> <!-- Added ml-4 for extra margin -->
+                            <a class="nav-link dropdown-toggle text-primary" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user-circle fa-lg"></i> 
+                                <span class="ml-2">{{ current_user.user_name }}</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user"></i> Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cog"></i> Settings
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="{{ url_for('Logout_Page') }}">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                {% else %}
+                    <div class="ml-auto d-flex">
+                        <a href="{{ url_for('Signin_Page') }}" class="btn btn-outline-primary mr-2">
+                            <i class="fas fa-sign-in-alt"></i> Sign in
+                        </a>
+                        <a href="{{ url_for('Signup_Page') }}" class="btn btn-primary">
+                            <i class="fas fa-user-plus"></i> Sign up
+                        </a>
+                    </div>
+                {% endif %}
+            
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mt-3">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm rounded-lg" role="alert">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Page content block -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- Navigation buttons (previous and next page) -->
+    {% if request.endpoint not in ['Signup_Page', 'Signin_Page'] %}
+        <div class="d-flex justify-content-between my-4">
+            <!-- Left button to navigate to the previous page -->
+            <a href="{{ url_for('previous_page', current_page=request.endpoint) }}" class="btn-icon-only">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+
+            <!-- Right button to navigate to the next page -->
+            <a href="{{ url_for('next_page', current_page=request.endpoint) }}" class="btn-icon-only">
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    {% endif %}
+   
+
+    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>

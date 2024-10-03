@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Register Page
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center text-dark mb-4">Create an Account</h2>
+        <form method="POST" class="form-register bg-white p-4 rounded shadow">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ form.username.label(class="text-dark") }}
+                {{ form.username(class="form-control", placeholder="User Name", required=True) }}
+            </div>
+            <div class="form-group">
+                {{ form.email.label(class="text-dark") }}
+                {{ form.email(class="form-control", placeholder="Email Address", required=True) }}
+            </div>
+            <div class="form-group">
+                {{ form.password1.label(class="text-dark") }}
+                {{ form.password1(class="form-control", placeholder="Password", required=True) }}
+            </div>
+            <div class="form-group">
+                {{ form.password2.label(class="text-dark") }}
+                {{ form.password2(class="form-control", placeholder="Confirm Password", required=True) }}
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+        </form>
+        
+        <p class="text-center text-dark mt-3">Already have an account? <a href="{{ url_for('Signin_Page') }}" class="text-primary">Sign in here</a></p>
+    </div>
+
+    <style>
+        /* Custom Styles for the Sign-Up Page */
+        body {
+            background-color: #f8f9fa; /* Light background color for better contrast */
+        }
+        
+        .form-register {
+            background-color: #ffffff; /* Light background for the form */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+        
+        .form-group label {
+            font-weight: bold; /* Bold labels */
+            font-size: 14px;  /* Adjust text size */
+        }
+
+        .form-control {
+            font-size: 16px; /* Larger input text */
+        }
+        
+        .btn-primary {
+            background-color: #28a745; /* Bootstrap success color */
+            border-color: #28a745; /* Match border color with background */
+            transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
+        }
+
+        .btn-primary:hover {
+            background-color: #218838; /* Darker green on hover */
+            border-color: #1e7e34; /* Match border color on hover */
+        }
+
+        /* Link styling */
+        .text-primary {
+            text-decoration: underline; /* Underline for better visibility */
+        }
+
+        .text-primary:hover {
+            color: #218838; /* Change color on hover */
+        }
+    </style>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block content %}
+    <!-- Main Content -->
+    <div class="container d-flex flex-column align-items-center justify-content-center py-5" style="min-height: 100vh; background: linear-gradient(to right, #e0f7fa, #b2ebf2);">
+        <h1 class="display-3 font-weight-bold text-dark">VerTechX</h1>
+        <div class="bg-success my-3" style="width: 80px; height: 4px; border-radius: 2px;"></div>
+        <p class="h4 text-secondary text-center" style="max-width: 600px;">For a Smart Green World! Join us in transforming the future of agriculture with innovative technology and sustainable practices.</p>
+
+        <!-- Call to Action Button -->
+        <a href="{{ url_for('Features_Page') }}" class="btn btn-primary btn-lg mt-4">Discover Our Features</a>
+    </div>
+{% endblock %}

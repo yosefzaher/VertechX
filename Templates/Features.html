@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Features Page
+{% endblock %}
+
+{% block content %}
+    <!-- Features Section -->
+    <div class="bg-light py-5">
+        <div class="text-center mb-5">
+            <h1 class="display-3 font-weight-bold">Features</h1> <!-- Increased title font size and margin -->
+        </div>
+
+        <!-- Features Container -->
+        <div class="container">
+            <div class="row justify-content-center">
+                
+                <!-- Dashboard Feature -->
+                <div class="col-md-4 text-center mb-4"> <!-- Responsive column layout for better alignment -->
+                    <i class="fas fa-th-large display-1 text-success mb-3"></i> <!-- Enlarged icon with color -->
+                    <h2 class="h3 font-weight-bold mb-2">Dashboard</h2> <!-- Increased font size -->
+                    <p class="text-muted"><i class="fas fa-tachometer-alt"></i> Read sensor values</p>
+                    <p class="text-muted"><i class="fas fa-toggle-on"></i> Change actuators status</p>
+                </div>
+
+                <!-- Machine Learning Feature -->
+                <div class="col-md-4 text-center mb-4"> <!-- Responsive column layout -->
+                    <i class="fas fa-brain display-1 text-primary mb-3"></i> <!-- Enlarged icon with color -->
+                    <h2 class="h3 font-weight-bold mb-2">Machine Learning Model</h2> <!-- Increased font size -->
+                    <p class="text-muted">Helps to monitor the health condition of the plant</p>
+                </div>
+
+                <!-- Air Conditioning System Feature -->
+                <div class="col-md-4 text-center mb-4"> <!-- Responsive column layout -->
+                    <i class="fas fa-wind display-1 text-warning mb-3"></i> <!-- Enlarged icon with color -->
+                    <h2 class="h3 font-weight-bold mb-2">Air Conditioning System</h2> <!-- Increased font size -->
+                    <p class="text-muted">Maintains suitable atmospheric conditions for plant growth</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

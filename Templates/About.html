@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    About Us Page
+{% endblock %}
+
+{% block content %}
+    <!-- Main Content -->
+    <main class="d-flex flex-column align-items-center justify-content-center min-vh-100 py-5 bg-light">
+        <!-- Background Decoration -->
+        <div class="position-absolute top-0 left-0 w-100 h-100" style="background: linear-gradient(135deg, rgba(34, 193, 195, 0.4), rgba(253, 187, 45, 0.4)); z-index: -1;"></div>
+
+        <!-- Header -->
+        <h1 class="display-3 font-weight-bold text-dark mb-5 text-center">
+            <i class="fas fa-seedling text-success mr-3"></i> <!-- Seedling icon -->
+            About Us
+        </h1>
+        
+        <!-- Description Paragraph -->
+        <p class="text-center lead text-dark mx-auto" style="max-width: 700px;">
+            VerTechX is a green project aiming to use cutting-edge technology to provide organic, healthy, and high-quality crops with minimal energy and water consumption. Our actions are consistently grounded in sustainability principles, ensuring the protection of our planet for future generations. Our vision is to lead sustainable agriculture and contribute to a greener, healthier world for all.
+        </p>
+
+        <!-- Values Section -->
+        <div class="row text-center mt-5 w-75">
+            <!-- Sustainability Value -->
+            <div class="col-md-4">
+                <i class="fas fa-leaf fa-3x text-success mb-3"></i> <!-- Green leaf icon -->
+                <h4 class="font-weight-bold text-dark">Sustainability</h4>
+                <p class="text-muted">
+                    We strive to promote eco-friendly farming techniques that help preserve the environment and reduce resource waste.
+                </p>
+            </div>
+
+            <!-- Technology Value -->
+            <div class="col-md-4">
+                <i class="fas fa-microchip fa-3x text-primary mb-3"></i> <!-- Technology icon -->
+                <h4 class="font-weight-bold text-dark">Technology</h4>
+                <p class="text-muted">
+                    Utilizing state-of-the-art innovations to achieve efficiency and maximize crop yield while reducing costs.
+                </p>
+            </div>
+
+            <!-- Future-Oriented Value -->
+            <div class="col-md-4">
+                <i class="fas fa-globe fa-3x text-warning mb-3"></i> <!-- Globe icon -->
+                <h4 class="font-weight-bold text-dark">Future-Oriented</h4>
+                <p class="text-muted">
+                    Aiming to create a lasting positive impact on the planet, ensuring a greener future for generations to come.
+                </p>
+            </div>
+        </div>
+
+    </main>
+{% endblock %}
