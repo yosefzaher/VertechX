@@ -1,9 +1,11 @@
 # Import necessary modules from Flask and related packages
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash ,jsonify
 from VertechX import app, db  # Import the app and db objects from your project
 from VertechX.models import User  # Import the User model
 from VertechX.forms import SignupForm, SigninForm  # Import form classes for signup and signin
 from flask_login import login_user, logout_user, login_required  # For user authentication and session management
+import requests
+
 
 # List of page endpoints to navigate between
 pages = [
@@ -13,6 +15,7 @@ pages = [
     'Features_Page',    # Features page endpoint
     'Integration_Page' # Integration page endpoint
 ]
+
 
 # Route for the Home page
 @app.route('/')
@@ -151,6 +154,7 @@ def Signin_Page():
 
 # Route for logging out a user
 @app.route('/logout')
+@login_required
 def Logout_Page():
     """
     Log the user out and redirect them to the home page.
@@ -159,3 +163,69 @@ def Logout_Page():
     logout_user()  # Log out the current user
     flash('You Have been Logged Out!', category='info')  # Flash a message
     return redirect(url_for('Home_Page'))  # Redirect to the home page
+
+@app.route("/dashboard" ,methods = ['POST' ,'GET'])
+@login_required
+def Dashboard_Page() :
+    return render_template('Dashboard.html')
+
+
+@app.route('/switch-mode/<mode>')
+@login_required
+def switch_mode(mode):
+    """
+    Serve the HTML content for either automatic or manual mode.
+    """
+    if mode == 'automatic':
+        return render_template('AutomaticMode.html')
+    elif mode == 'manual':
+        return render_template('ManualMode.html')
+    else:
+        return "Invalid mode", 400    
+
+###############################################################################
+#                         The Control System                                  #
+#                                                                             #  
+###############################################################################
+
+# # API endpoint to fetch sensor data
+# @app.route('/api/sensors', methods=['GET'])
+# @login_required
+# def get_sensor_data():
+    
+#     # Fetch sensor data
+#     humidity, temperature = 70, 35
+
+#     if humidity is not None and temperature is not None:
+#         sensor_data = {
+#             'temperature': round(temperature, 2),
+#             'humidity': round(humidity, 2)
+#         }
+#         return jsonify(sensor_data)
+#     else:
+#         return jsonify({'error': 'Failed to retrieve data'}), 500
+    
+
+
+
+
+
+
+
+    
+
+# # Fetch sensor data from the FastAPI service
+# @app.route('/api/get_sensor_data', methods=['GET'])
+# @login_required
+# def fetch_sensor_data_from_fastapi():
+#     try:
+#         # Send a request to the FastAPI microservice
+#         response = requests.get('http://127.0.0.1:5000/api/sensors')  # Adjust the URL if FastAPI is hosted elsewhere
+#         response.raise_for_status()  # Raise an exception for bad status codes
+#         data = response.json()  # Parse the JSON response
+
+#         # Return the sensor data as part of the Flask response
+#         return jsonify(data)
+    
+#     except requests.exceptions.RequestException as e:
+#         return jsonify({'error': str(e)}), 500

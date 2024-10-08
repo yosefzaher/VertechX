@@ -1,5 +1,5 @@
 from VertechX import db ,bcrypt ,login
-from flask_login import UserMixin # type: ignore
+from flask_login import UserMixin 
 
 @login.user_loader
 def load_user(user_id):
@@ -65,3 +65,5 @@ class User(db.Model , UserMixin):
         bool: True if the attempted password matches the hashed password, False otherwise.
         """
         return bcrypt.check_password_hash(self.Password_Hash, Attempted_Password)
+
+

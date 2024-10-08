@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h1 class="display-4 font-weight-bold">Dashboard</h1>
+    <div class="mb-4">
+        <button class="btn btn-dark mr-2" id="btn-automate">Automate</button>
+        <button class="btn btn-outline-dark" id="btn-manual">Manual</button>
+    </div>
+    <div id="content-area">
+        <!-- By default, this will load automatic mode via a fetch request -->
+    </div>
+</div>
+
+<script>
+    //Loading AutomaticMode.html Or ManualMode.html Based on the Mode that User Choose
+    // Function to load content from the server
+    async function loadContent(mode) {
+        const contentArea = document.getElementById('content-area');
+        try {
+            const response = await fetch(`/switch-mode/${mode}`);  // <-- Use backticks for string interpolation
+            const html = await response.text();
+            contentArea.innerHTML = html;
+        } catch (error) {
+            console.error('Error loading content:', error);
+            contentArea.innerHTML = "<p>Error loading mode. Please try again.</p>";
+        }
+    }
+
+
+    // Event listeners for buttons
+    document.getElementById('btn-automate').addEventListener('click', function() {
+        loadContent('automatic');
+    });
+
+    document.getElementById('btn-manual').addEventListener('click', function() {
+        loadContent('manual');
+    });
+
+    // Load automatic mode on page load
+    loadContent('automatic');
+    ///////////////////////////////////////////////////////////////////////////////////////////
+</script>
+{% endblock %} 

@@ -2,7 +2,9 @@
 from flask import Flask, request  # Flask core and request handling
 from flask_sqlalchemy import SQLAlchemy  # SQLAlchemy for ORM and database interaction
 from flask_bcrypt import Bcrypt  # Bcrypt for password hashing
-from flask_login import LoginManager, login_user, logout_user, login_required  # For user authentication and session management
+from flask_login import LoginManager  # For user authentication and session management
+from flask_cors import CORS # For Solve Cross-Origin Issues
+
 
 # Initialize the Flask application with the specified template folder
 app = Flask(__name__, template_folder='../Templates')
@@ -10,6 +12,14 @@ app = Flask(__name__, template_folder='../Templates')
 Create a Flask application instance.
 - `__name__`: Tells Flask to look for static files and templates in the current folder.
 - `template_folder`: Points to the location where HTML templates are stored, set to '../Templates' relative to the current directory.
+"""
+
+# Solve Cross-Origin Issues
+CORS(app)
+"""
+Cross-Origin Issues:-
+    If you're running the frontend and backend on different ports (e.g., React on 3000 and Flask on 5000),
+    you might be running into CORS (Cross-Origin Resource Sharing) issues. 
 """
 
 # Configure The Secret Key for Forms part of the app instance

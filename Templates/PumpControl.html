@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center min-vh-100">
+    <div class="bg-white p-4 rounded shadow w-100" style="max-width: 400px;">
+        <div class="text-center mb-4">
+            <h1 class="h3 font-weight-bold">Dashboard</h1>
+            <div class="d-flex justify-content-center mt-2">
+                <button class="btn btn-dark mr-2" id="btn-automate">Automate</button>
+                <button class="btn btn-outline-dark" id="btn-manual">Manual</button>
+            </div>
+        </div>
+        <div class="text-center">
+            <h2 class="h5 font-weight-bold mb-4">Actuator</h2>
+            <div class="form-group">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="pumpToggle">
+                    <label class="custom-control-label" for="pumpToggle">Pump Control</label>
+                </div>
+            </div>
+        </div>
+        <div class="text-left mt-4">
+            <i class="fas fa-arrow-left text-black" style="cursor: pointer;" onclick="goBack()"></i>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            // Function to handle back navigation
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
