@@ -6,41 +6,48 @@
 <div class="container mt-5 text-center">
     <h1 class="display-4 font-weight-bold">Dashboard</h1>
     <div class="mb-4">
-        <button class="btn btn-dark mr-2" id="btn-automate">Automate</button>
-        <button class="btn btn-outline-dark" id="btn-manual">Manual</button>
+        <a href="{{ url_for('Dashboard_Page', mode='automatic') }}" class="btn btn-dark mr-2">Automatic</a>
+        <a href="{{ url_for('Dashboard_Page', mode='manual') }}" class="btn btn-outline-dark">Manual</a>
     </div>
+
     <div id="content-area">
-        <!-- By default, this will load automatic mode via a fetch request -->
+        <!-- Dynamically include the content based on the mode -->
+        {% if mode == 'automatic' %}
+            {% include 'AutomaticMode.html' %}
+            {% include 'PumpControl.html' %}
+        {% elif mode == 'manual' %}
+            {% include 'ManualMode.html' %}
+            {% include 'PumpControl.html' %}
+        {% endif %}
+    
     </div>
 </div>
 
+<!-- Include Axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <script>
-    //Loading AutomaticMode.html Or ManualMode.html Based on the Mode that User Choose
-    // Function to load content from the server
-    async function loadContent(mode) {
-        const contentArea = document.getElementById('content-area');
-        try {
-            const response = await fetch(`/switch-mode/${mode}`);  // <-- Use backticks for string interpolation
-            const html = await response.text();
-            contentArea.innerHTML = html;
-        } catch (error) {
-            console.error('Error loading content:', error);
-            contentArea.innerHTML = "<p>Error loading mode. Please try again.</p>";
+    document.addEventListener("DOMContentLoaded", function() {
+        async function fetchSensorData() {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/sensors'); // FastAPI URL for fetching sensor data
+                const data = response.data;
+
+                // Update the DOM elements with the fetched sensor data
+                document.getElementById('temperature').textContent = data.temperature + ' °C';
+                document.getElementById('humidity').textContent = data.humidity + '%';
+                document.getElementById('ph').textContent = "7.0";  // Static example, replace if dynamic pH data is available
+            } catch (error) {
+                console.error('Error fetching sensor data:', error);
+                document.getElementById('temperature').textContent = 'Error loading temperature';
+                document.getElementById('humidity').textContent = 'Error loading humidity';
+                document.getElementById('ph').textContent = 'Error loading pH';
+            }
         }
-    }
 
-
-    // Event listeners for buttons
-    document.getElementById('btn-automate').addEventListener('click', function() {
-        loadContent('automatic');
+        // Fetch sensor data on page load and every 2 seconds
+        fetchSensorData();
+        setInterval(fetchSensorData, 2000);
     });
-
-    document.getElementById('btn-manual').addEventListener('click', function() {
-        loadContent('manual');
-    });
-
-    // Load automatic mode on page load
-    loadContent('automatic');
-    ///////////////////////////////////////////////////////////////////////////////////////////
 </script>
-{% endblock %} 
+{% endblock %}

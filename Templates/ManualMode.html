@@ -1,4 +1,4 @@
-<h2 class="h3 font-weight-bold mb-4">Manual Mode - Sensor Readings</h2>
+<h2 class="h3 font-weight-bold mb-4">Manual Mode - Sensors Readings</h2>
 <div class="row justify-content-center">
     <!-- pH Sensor -->
     <div class="col-md-4">
@@ -29,34 +29,6 @@
     </div>
 </div>
 
-<!-- Include Axios (if not already included in your project) -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-
-        async function fetchSensorData() {
-            try {
-                const response = await axios.get('http://127.0.0.1:8000/api/sensors'); // FastAPI URL for fetching sensor data
-                const data = response.data;
-
-                // Update the DOM elements with the fetched sensor data
-                document.getElementById('temperature').textContent = data.temperature + ' °C';
-                document.getElementById('humidity').textContent = data.humidity + '%';
-                document.getElementById('ph').textContent = "7.0";  // Static example, replace if dynamic pH data is available
-            } catch (error) {
-                console.error('Error fetching sensor data:', error);
-                document.getElementById('temperature').textContent = 'Error loading temperature';
-                document.getElementById('humidity').textContent = 'Error loading humidity';
-                document.getElementById('ph').textContent = 'Error loading pH';
-            }
-        }
-
-        // Fetch sensor data on page load and every 5 seconds
-        fetchSensorData();
-        setInterval(fetchSensorData, 5000);  // Refresh sensor data every 5 seconds
-    });
-</script>
 
 
 

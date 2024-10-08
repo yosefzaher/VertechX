@@ -1,10 +1,10 @@
 # Import necessary modules from Flask and related packages
-from flask import render_template, redirect, url_for, flash ,jsonify
+from flask import render_template, redirect, url_for, flash ,request
 from VertechX import app, db  # Import the app and db objects from your project
 from VertechX.models import User  # Import the User model
 from VertechX.forms import SignupForm, SigninForm  # Import form classes for signup and signin
 from flask_login import login_user, logout_user, login_required  # For user authentication and session management
-import requests
+
 
 
 # List of page endpoints to navigate between
@@ -164,31 +164,36 @@ def Logout_Page():
     flash('You Have been Logged Out!', category='info')  # Flash a message
     return redirect(url_for('Home_Page'))  # Redirect to the home page
 
-@app.route("/dashboard" ,methods = ['POST' ,'GET'])
+@app.route("/dashboard", methods=['GET'])
 @login_required
-def Dashboard_Page() :
-    return render_template('Dashboard.html')
+def Dashboard_Page():
+    # Get the mode from the query string (defaults to 'automatic')
+    mode = request.args.get('mode', 'automatic')
+    return render_template('Dashboard.html', mode=mode)
 
 
-@app.route('/switch-mode/<mode>')
-@login_required
-def switch_mode(mode):
-    """
-    Serve the HTML content for either automatic or manual mode.
-    """
-    if mode == 'automatic':
-        return render_template('AutomaticMode.html')
-    elif mode == 'manual':
-        return render_template('ManualMode.html')
-    else:
-        return "Invalid mode", 400    
+# @app.route('/switch-mode/<mode>')
+# @login_required
+# def switch_mode(mode):
+#     """
+#     Serve the HTML content for either automatic or manual mode.
+#     """
+#     try:
+#         if mode == 'automatic':
+#             return render_template('AutomaticMode.html')
+#         elif mode == 'manual':
+#             return render_template('ManualMode.html')
+#         else:
+#             return "Invalid mode", 400
+#     except Exception as e:
+#         return str(e), 500 
 
 ###############################################################################
 #                         The Control System                                  #
 #                                                                             #  
 ###############################################################################
 
-# # API endpoint to fetch sensor data
+# API endpoint to fetch sensor data
 # @app.route('/api/sensors', methods=['GET'])
 # @login_required
 # def get_sensor_data():
@@ -212,7 +217,7 @@ def switch_mode(mode):
 
 
 
-    
+
 
 # # Fetch sensor data from the FastAPI service
 # @app.route('/api/get_sensor_data', methods=['GET'])

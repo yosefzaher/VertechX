@@ -1,40 +1,201 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Centered container styling */
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Title styling */
+        h2 {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+
+        /* General pump container styles */
+        .pump-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            padding: 30px;
+            border: 2px solid #2196F3;
+            border-radius: 10px;
+            background-color: #e3f2fd;
+            transition: transform 0.3s ease;
+        }
+
+        .pump-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Title styling for pumps */
+        .pump-title {
+            font-size: 1.6em;
+            color: #2196F3;
+            margin: 0;
+        }
+
+        /* Pump info styling */
+        .pump-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Toggle Switch CSS */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 75px;
+            height: 38px;
+            margin: 15px 0; /* Increased margin for better spacing */
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: background-color 0.4s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 32px; /* Slightly increased height for the slider */
+            width: 32px; /* Slightly increased width for the slider */
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: transform 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(37px); /* Adjusted for increased slider size */
+        }
+
+        /* Status text styling */
+        .pump-status {
+            font-size: 1.3em; /* Increased font size for better visibility */
+            color: #666;
+            margin-top: 15px; /* Increased margin for better spacing */
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .pump-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 20px; /* Reduced padding on smaller screens */
+            }
+        }
+    </style>
 </head>
-<body class="bg-light d-flex align-items-center justify-content-center min-vh-100">
-    <div class="bg-white p-4 rounded shadow w-100" style="max-width: 400px;">
-        <div class="text-center mb-4">
-            <h1 class="h3 font-weight-bold">Dashboard</h1>
-            <div class="d-flex justify-content-center mt-2">
-                <button class="btn btn-dark mr-2" id="btn-automate">Automate</button>
-                <button class="btn btn-outline-dark" id="btn-manual">Manual</button>
+
+<body>
+    <div class="container">
+        <h2>Pump Control</h2>
+        <div class="pump-container">
+            <div class="pump-info">
+                <p class="pump-title">Pump 1</p>
+                <label class="switch">
+                    <input type="checkbox" id="pump1Toggle" {% if mode == 'automatic' %}disabled{% endif %}>
+                    <span class="slider round"></span>
+                </label>
+                <p id="pump1Status" class="pump-status">Pump is OFF</p>
             </div>
-        </div>
-        <div class="text-center">
-            <h2 class="h5 font-weight-bold mb-4">Actuator</h2>
-            <div class="form-group">
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="pumpToggle">
-                    <label class="custom-control-label" for="pumpToggle">Pump Control</label>
-                </div>
+            <div class="pump-info">
+                <p class="pump-title">Pump 2</p>
+                <label class="switch">
+                    <input type="checkbox" id="pump2Toggle" {% if mode == 'automatic' %}disabled{% endif %}>
+                    <span class="slider round"></span>
+                </label>
+                <p id="pump2Status" class="pump-status">Pump is OFF</p>
             </div>
-        </div>
-        <div class="text-left mt-4">
-            <i class="fas fa-arrow-left text-black" style="cursor: pointer;" onclick="goBack()"></i>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        function goBack() {
-            // Function to handle back navigation
-            window.history.back();
-        }
+        document.addEventListener("DOMContentLoaded", function() {
+            const pump1Toggle = document.getElementById("pump1Toggle");
+            const pump1Status = document.getElementById("pump1Status");
+            const pump2Toggle = document.getElementById("pump2Toggle");
+            const pump2Status = document.getElementById("pump2Status");
+
+            // Function to fetch initial pump states
+            async function getPumpStates() {
+                try {
+                    const response = await axios.get('http://127.0.0.1:8000/api/pump_states'); // Endpoint for both pumps
+                    const { pump1_state, pump2_state } = response.data;
+                    pump1Toggle.checked = pump1_state === 'on';
+                    pump2Toggle.checked = pump2_state === 'on';
+                    pump1Status.textContent = pump1_state === 'on' ? 'Pump 1 is ON' : 'Pump 1 is OFF';
+                    pump2Status.textContent = pump2_state === 'on' ? 'Pump 2 is ON' : 'Pump 2 is OFF';
+                } catch (error) {
+                    console.error('Error fetching pump states:', error);
+                }
+            }
+
+            // Event listener for pump 1
+            pump1Toggle.addEventListener("change", async function() {
+                if (pump1Toggle.disabled) return; // Prevent changes in automatic mode
+                const isPump1On = pump1Toggle.checked;
+                try {
+                    await axios.post('http://127.0.0.1:8000/api/pump_control', { state: isPump1On ? 'on' : 'off', pump: 1 });
+                    pump1Status.textContent = isPump1On ? 'Pump 1 is ON' : 'Pump 1 is OFF';
+                } catch (error) {
+                    console.error('Error controlling pump 1:', error);
+                }
+            });
+
+            // Event listener for pump 2
+            pump2Toggle.addEventListener("change", async function() {
+                if (pump2Toggle.disabled) return; // Prevent changes in automatic mode
+                const isPump2On = pump2Toggle.checked;
+                try {
+                    await axios.post('http://127.0.0.1:8000/api/pump_control', { state: isPump2On ? 'on' : 'off', pump: 2 });
+                    pump2Status.textContent = isPump2On ? 'Pump 2 is ON' : 'Pump 2 is OFF';
+                } catch (error) {
+                    console.error('Error controlling pump 2:', error);
+                }
+            });
+
+            // Initialize pump states on page load
+            getPumpStates();
+        });
     </script>
 </body>
-</html>
+
