@@ -15,51 +15,66 @@
     </title>
 
     <style>
-        /* Navbar Links Hover and Active Animation */
+        /* Navbar Custom Styles */
+        .navbar {
+            background-color: #ffffff; /* Change to your desired navbar background */
+            border-bottom: 1px solid #e1e1e1; /* Subtle bottom border for depth */
+        }
+
+        .navbar-brand {
+            font-weight: bold; /* Make brand text bold */
+        }
+
         .navbar-nav .nav-link {
-            padding: 0.5rem 1.25rem;
-            font-weight: 500;
-            color: #555;
-            transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
-            position: relative;
-            margin-right: 20px;
+            padding: 0.75rem 1.5rem; /* Increased padding for a more substantial feel */
+            font-weight: 600; /* Bold text for better visibility */
+            color: #333; /* Darker color for better contrast */
+            transition: all 0.3s ease; /* Smooth transition for hover effects */
+            border-radius: 5px; /* Rounded corners for nav links */
         }
-    
-        .navbar-nav .nav-link:last-child {
-            margin-right: 0;
-        }
-    
-        .navbar-nav .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: transparent;
-            transform: scaleX(0);
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-    
+
         .navbar-nav .nav-link:hover {
-            color: #fff;
-            background-color: #3a8de6;
-            border-radius: 5px;
-            transform: scale(1.05);
+            color: #fff; /* Change text color on hover */
+            background-color: #007bff; /* Bootstrap primary color */
+            transform: translateY(-2px); /* Slight lift effect on hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
         }
-    
-        .navbar-nav .nav-link:hover::after {
-            background-color: #fff;
-            transform: scaleX(1);
-        }
-    
+
         .navbar-nav .nav-link.active {
-            color: #3a8de6;
+            color: #fff; /* Active link color */
+            background-color: #007bff; /* Same as hover color */
         }
-    
-        .navbar-nav .nav-link.active::after {
-            background-color: #3a8de6;
-            transform: scaleX(1);
+
+        .navbar-nav .nav-item {
+            margin-right: 15px; /* Space between nav items */
+        }
+
+        .navbar-nav .btn {
+            margin-left: 10px; /* Adjust the margin for buttons */
+            border-radius: 20px; /* Rounded corners for buttons */
+            font-weight: 500; /* Slightly bolder text for buttons */
+        }
+
+        .navbar-nav .btn-success {
+            background-color: #28a745; /* Bootstrap success color */
+            color: white; /* White text for button */
+        }
+
+        .navbar-nav .btn-success:hover {
+            background-color: #218838; /* Darker shade on hover */
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            border-radius: 8px; /* Rounded corners for dropdown */
+        }
+
+        .dropdown-menu .dropdown-item {
+            transition: background-color 0.3s ease; /* Smooth transition for dropdown items */
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #f1f1f1; /* Light background on hover */
         }
     
         .btn-icon-only {

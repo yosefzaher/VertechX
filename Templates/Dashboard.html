@@ -3,12 +3,34 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
+
+<style>
+    /* Active button style */
+    .btn-active {
+        background-color: #4a90e2; /* Active button color */
+        color: white; /* Text color for active button */
+    }
+
+    /* Inactive button style */
+    .btn-inactive {
+        background-color: transparent; /* Transparent background for inactive */
+        color: #4a90e2; /* Text color for inactive button */
+        border: 2px solid #4a90e2; /* Border for inactive button */
+    }
+
+    /* Button hover effect */
+    .btn:hover {
+        opacity: 0.8; /* Slightly dim on hover */
+    }
+</style>
+
 <div class="container mt-5 text-center">
     <h1 class="display-4 font-weight-bold">Dashboard</h1>
     <div class="mb-4">
-        <a href="{{ url_for('Dashboard_Page', mode='automatic') }}" class="btn btn-dark mr-2">Automatic</a>
-        <a href="{{ url_for('Dashboard_Page', mode='manual') }}" class="btn btn-outline-dark">Manual</a>
+        <a href="{{ url_for('Dashboard_Page', mode='automatic') }}" class="btn {% if mode == 'automatic' %}btn-active{% else %}btn-inactive{% endif %} mr-2">Automatic</a>
+        <a href="{{ url_for('Dashboard_Page', mode='manual') }}" class="btn {% if mode == 'manual' %}btn-active{% else %}btn-inactive{% endif %}">Manual</a>
     </div>
+    
 
     <div id="content-area">
         {% if mode == 'automatic' %}
