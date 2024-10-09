@@ -1,6 +1,5 @@
 <h2 class="h3 font-weight-bold mb-4">Automatic Mode - Sensors Readings</h2>
-<div class="row justify-content-center">
-    <!-- pH Sensor -->
+<div class="row justify-content-center mb-4">
     <div class="col-md-4">
         <div class="card shadow-sm">
             <div class="card-body">
@@ -9,7 +8,6 @@
             </div>
         </div>
     </div>
-    <!-- Temperature Sensor -->
     <div class="col-md-4">
         <div class="card shadow-sm">
             <div class="card-body">
@@ -18,7 +16,6 @@
             </div>
         </div>
     </div>
-    <!-- Humidity Sensor -->
     <div class="col-md-4">
         <div class="card shadow-sm">
             <div class="card-body">
@@ -26,5 +23,18 @@
                 <h3 id="humidity" class="display-4"></h3>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<div class="row justify-content-center mb-4">
+    <div class="col-md-4">
+        <canvas id="phChart" width="400" height="200"></canvas>
+    </div>
+    <div class="col-md-4">
+        <canvas id="temperatureChart" width="400" height="200"></canvas>
+    </div>
+    <div class="col-md-4">
+        <canvas id="humidityChart" width="400" height="200"></canvas>
     </div>
 </div>

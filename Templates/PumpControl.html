@@ -1,16 +1,14 @@
 <head>
     <style>
-        /* General body styling */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #f4f6f8;
             margin: 0;
             padding: 0;
         }
 
-        /* Centered container styling */
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 40px auto;
             padding: 40px;
             background-color: #ffffff;
@@ -19,7 +17,6 @@
             text-align: center;
         }
 
-        /* Title styling */
         h2 {
             font-weight: bold;
             color: #333;
@@ -27,7 +24,6 @@
             font-size: 2.5em;
         }
 
-        /* General pump container styles */
         .pump-container {
             display: flex;
             justify-content: space-around;
@@ -44,34 +40,18 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
-        /* Title styling for pumps */
         .pump-title {
             font-size: 1.6em;
             color: #2196F3;
             margin: 0;
         }
 
-        /* Pump info styling */
-        .pump-info {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        /* Toggle Switch CSS */
         .switch {
             position: relative;
             display: inline-block;
             width: 75px;
             height: 38px;
-            margin: 15px 0; /* Increased margin for better spacing */
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
+            margin: 15px 0;
         }
 
         .slider {
@@ -89,8 +69,8 @@
         .slider:before {
             position: absolute;
             content: "";
-            height: 32px; /* Slightly increased height for the slider */
-            width: 32px; /* Slightly increased width for the slider */
+            height: 32px;
+            width: 32px;
             left: 3px;
             bottom: 3px;
             background-color: white;
@@ -103,22 +83,20 @@
         }
 
         input:checked + .slider:before {
-            transform: translateX(37px); /* Adjusted for increased slider size */
+            transform: translateX(37px);
         }
 
-        /* Status text styling */
         .pump-status {
-            font-size: 1.3em; /* Increased font size for better visibility */
+            font-size: 1.3em;
             color: #666;
-            margin-top: 15px; /* Increased margin for better spacing */
+            margin-top: 15px;
         }
 
-        /* Responsive design */
         @media (max-width: 600px) {
             .pump-container {
                 flex-direction: column;
                 align-items: center;
-                padding: 20px; /* Reduced padding on smaller screens */
+                padding: 20px;
             }
         }
     </style>
