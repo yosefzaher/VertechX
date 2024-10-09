@@ -55,7 +55,8 @@
         // Get the 2D rendering contexts for each chart
         const ctxTemperature = document.getElementById('temperatureChart').getContext('2d');
         const ctxHumidity = document.getElementById('humidityChart').getContext('2d');
-        const ctxPH = document.getElementById('phChart').getContext('2d');
+        const ctxPH1 = document.getElementById('phChart1').getContext('2d');
+        const ctxPH2 = document.getElementById('phChart2').getContext('2d');
 
         // Create the Temperature chart
         const temperatureChart = new Chart(ctxTemperature, {
@@ -131,13 +132,13 @@
             }
         });
 
-        // Create the pH Level chart
-        const phChart = new Chart(ctxPH, {
+        // Create the pH1 Level chart
+        const phChart1 = new Chart(ctxPH1, {
             type: 'line', // Specify the chart type
             data: {
                 labels: [], // Array to hold time labels
                 datasets: [{
-                    label: 'pH Level', // Label for the dataset
+                    label: 'pH1 Level', // Label for the dataset
                     borderColor: '#4bc0c0', // Color of the line
                     backgroundColor: 'rgba(75, 192, 192, 0.2)', // Background color under the line
                     data: [], // Array to hold pH data points
@@ -152,7 +153,7 @@
                         callbacks: {
                             label: function(context) {
                                 // Customize the tooltip to show pH value
-                                return `pH: ${context.raw}`;
+                                return `pH1: ${context.raw}`;
                             }
                         }
                     }
@@ -162,11 +163,48 @@
                         title: { display: true, text: 'Time' } // X-axis title
                     },
                     y: {
-                        title: { display: true, text: 'pH Level' } // Y-axis title
+                        title: { display: true, text: 'pH1 Level' } // Y-axis title
                     }
                 }
             }
         });
+      
+        // Create the pH2 Level chart
+        const phChart2 = new Chart(ctxPH2, {
+            type: 'line', // Specify the chart type
+            data: {
+                labels: [], // Array to hold time labels
+                datasets: [{
+                    label: 'pH2 Level', // Label for the dataset
+                    borderColor: '#4bc0c0', // Color of the line
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Background color under the line
+                    data: [], // Array to hold pH data points
+                    fill: true // Fill the area under the line
+                }]
+            },
+            options: {
+                responsive: true, // Make the chart responsive
+                plugins: {
+                    legend: { display: true }, // Display the legend
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                // Customize the tooltip to show pH value
+                                return `pH2: ${context.raw}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Time' } // X-axis title
+                    },
+                    y: {
+                        title: { display: true, text: 'pH2 Level' } // Y-axis title
+                    }
+                }
+            }
+        });        
 
         // Function to fetch sensor data from the API
         async function fetchSensorData() {
@@ -178,7 +216,8 @@
                 // Update readings in the DOM
                 document.getElementById('temperature').textContent = data.temperature + ' °C'; // Update temperature display
                 document.getElementById('humidity').textContent = data.humidity + '%'; // Update humidity display
-                document.getElementById('ph').textContent = data.ph; // Update pH display
+                document.getElementById('ph1').textContent = data.ph1; // Update pH1 display
+                document.getElementById('ph2').textContent = data.ph2 // Update pH1 display
 
                 // Get the current time label
                 const timeLabel = new Date().toLocaleTimeString();
@@ -193,10 +232,15 @@
                 humidityChart.data.datasets[0].data.push(data.humidity); // Add new humidity data
                 humidityChart.update(); // Update the chart
 
-                // Update chart data for pH Level
-                phChart.data.labels.push(timeLabel); // Add new time label
-                phChart.data.datasets[0].data.push(data.ph); // Add new pH data
-                phChart.update(); // Update the chart
+                // Update chart data for pH1 Level
+                phChart1.data.labels.push(timeLabel); // Add new time label
+                phChart1.data.datasets[0].data.push(data.ph1); // Add new pH1 data
+                phChart1.update(); // Update the chart
+
+                // Update chart data for pH2 Level
+                phChart2.data.labels.push(timeLabel); // Add new time label
+                phChart2.data.datasets[0].data.push(data.ph2); // Add new pH2 data
+                phChart2.update(); // Update the chart            
 
             } catch (error) {
                 // Handle errors during the fetch
@@ -204,7 +248,8 @@
                 // Display error messages in the DOM
                 document.getElementById('temperature').textContent = 'Error loading temperature';
                 document.getElementById('humidity').textContent = 'Error loading humidity';
-                document.getElementById('ph').textContent = 'Error loading pH';
+                document.getElementById('ph1').textContent = 'Error loading pH1';
+                document.getElementById('ph2').textContent = 'Error loading pH2';                
             }
         }
 

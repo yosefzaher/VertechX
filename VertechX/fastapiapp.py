@@ -32,7 +32,8 @@ class SensorData(BaseModel):
     """
     temperature: float
     humidity: float
-    ph  :   float
+    ph1  :   float
+    ph2  :   float    
 
 
 
@@ -41,7 +42,8 @@ class SensorData(BaseModel):
 dht_sensor_data = {
     "temperature": 33.24,  # Static Example temperature value in Celsius
     "humidity": 42.2 ,     # Static Example humidity value as a percentage
-    "ph"    : 6.3          # Static Example pH value  
+    "ph1"    : 6.3  ,        # Static Example pH value  
+    "ph2"    : 5.3          # Static Example pH value     
 }
 
 
@@ -63,12 +65,13 @@ async def get_sensor_data():
     # Get the current sensor values (this could be from a sensor or a database in a real-world application)
     humidity = dht_sensor_data['humidity']
     temperature = dht_sensor_data['temperature']
-    ph      = dht_sensor_data['ph']
+    ph1     = dht_sensor_data['ph1']
+    ph2     = dht_sensor_data['ph2']    
     
     # Check if the sensor values are not None (i.e., data exists)
     if humidity is not None and temperature is not None:
         # Return sensor data in the expected format, rounding the values to 2 decimal places
-        return SensorData(temperature=round(temperature, 0), humidity=round(humidity, 0) ,ph=round(ph, 1))
+        return SensorData(temperature=round(temperature, 0), humidity=round(humidity, 0) ,ph1=round(ph1, 1) ,ph2=round(ph2, 1))
     else:
         # Raise a 500 error if sensor data cannot be retrieved
         raise HTTPException(status_code=500, detail="Failed to retrieve data")

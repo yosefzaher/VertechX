@@ -3,11 +3,19 @@
     <div class="col-md-4"> <!-- Column for pH sensor reading -->
         <div class="card shadow-sm"> <!-- Card to display sensor information -->
             <div class="card-body"> <!-- Body of the card -->
-                <h5 class="card-title">pH Sensor</h5> <!-- Title for the pH sensor card -->
-                <h3 id="ph" class="reading-value"></h3> <!-- Element to display pH sensor value -->
+                <h5 class="card-title">1st pH Sensor</h5> <!-- Title for the pH sensor card -->
+                <h3 id="ph1" class="reading-value"></h3> <!-- Element to display pH sensor value -->
             </div>
         </div>
     </div>
+    <div class="col-md-4"> <!-- Column for pH sensor reading -->
+        <div class="card shadow-sm"> <!-- Card to display sensor information -->
+            <div class="card-body"> <!-- Body of the card -->
+                <h5 class="card-title">2st pH Sensor</h5> <!-- Title for the pH sensor card -->
+                <h3 id="ph2" class="reading-value"></h3> <!-- Element to display pH sensor value -->
+            </div>
+        </div>
+    </div>    
     <div class="col-md-4"> <!-- Column for temperature reading -->
         <div class="card shadow-sm"> <!-- Card to display sensor information -->
             <div class="card-body"> <!-- Body of the card -->
@@ -29,8 +37,11 @@
 <!-- Charts Section for visual representation of sensor data -->
 <div class="row justify-content-center mb-4"> <!-- Row for sensor charts with center alignment -->
     <div class="col-md-4"> <!-- Column for pH chart -->
-        <canvas id="phChart" width="400" height="200"></canvas> <!-- Canvas element for pH chart -->
+        <canvas id="phChart1" width="400" height="200"></canvas> <!-- Canvas element for pH1 chart -->
     </div>
+    <div class="col-md-4"> <!-- Column for pH chart -->
+        <canvas id="phChart2" width="400" height="200"></canvas> <!-- Canvas element for pH2 chart -->
+    </div>    
     <div class="col-md-4"> <!-- Column for temperature chart -->
         <canvas id="temperatureChart" width="400" height="200"></canvas> <!-- Canvas element for temperature chart -->
     </div>
