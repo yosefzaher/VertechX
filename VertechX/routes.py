@@ -172,6 +172,16 @@ def Dashboard_Page():
     return render_template('Dashboard.html', mode=mode)
 
 
+
+
+
+
+
+
+
+
+
+
 # @app.route('/switch-mode/<mode>')
 # @login_required
 # def switch_mode(mode):
@@ -209,14 +219,6 @@ def Dashboard_Page():
 #         return jsonify(sensor_data)
 #     else:
 #         return jsonify({'error': 'Failed to retrieve data'}), 500
-    
-
-
-
-
-
-
-
 
 
 # # Fetch sensor data from the FastAPI service

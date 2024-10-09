@@ -1,77 +1,83 @@
-{% extends "base.html" %}
+{% extends "base.html" %} <!-- Extending a base HTML template for consistent structure -->
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Dashboard{% endblock %} <!-- Setting the title of the page -->
 
 {% block content %}
 
 <style>
-    /* Active button style */
+    /* Active button style for the active mode */
     .btn-active {
-        background-color: #4a90e2; /* Active button color */
-        color: white; /* Text color for active button */
+        background-color: #4a90e2; /* Set a blue background for active button */
+        color: white; /* Set text color to white for visibility */
     }
 
-    /* Inactive button style */
+    /* Inactive button style for the inactive mode */
     .btn-inactive {
-        background-color: transparent; /* Transparent background for inactive */
-        color: #4a90e2; /* Text color for inactive button */
-        border: 2px solid #4a90e2; /* Border for inactive button */
+        background-color: transparent; /* Transparent background for inactive button */
+        color: #4a90e2; /* Set text color to the same blue as the active button */
+        border: 2px solid #4a90e2; /* Blue border for inactive button */
     }
 
-    /* Button hover effect */
+    /* Button hover effect to enhance user interaction */
     .btn:hover {
-        opacity: 0.8; /* Slightly dim on hover */
+        opacity: 0.8; /* Slightly dim the button when hovered */
     }
 </style>
 
-<div class="container mt-5 text-center">
-    <h1 class="display-4 font-weight-bold">Dashboard</h1>
-    <div class="mb-4">
+<div class="container mt-5 text-center"> <!-- Main container for the dashboard -->
+    <h1 class="display-4 font-weight-bold">Dashboard</h1> <!-- Main heading for the dashboard -->
+    <div class="mb-4"> <!-- Margin below the button group -->
+        <!-- Link for Automatic mode -->
         <a href="{{ url_for('Dashboard_Page', mode='automatic') }}" class="btn {% if mode == 'automatic' %}btn-active{% else %}btn-inactive{% endif %} mr-2">Automatic</a>
+        <!-- Link for Manual mode -->
         <a href="{{ url_for('Dashboard_Page', mode='manual') }}" class="btn {% if mode == 'manual' %}btn-active{% else %}btn-inactive{% endif %}">Manual</a>
     </div>
     
-
-    <div id="content-area">
-        {% if mode == 'automatic' %}
-            {% include 'AutomaticMode.html' %}
-            {% include 'PumpControl.html' %}
-        {% elif mode == 'manual' %}
-            {% include 'ManualMode.html' %}
-            {% include 'PumpControl.html' %}
+    <div id="content-area"> <!-- Area to load content based on selected mode -->
+        {% if mode == 'automatic' %} <!-- Conditional rendering for Automatic mode -->
+            {% include 'AutomaticMode.html' %} <!-- Include content for Automatic mode -->
+            {% include 'PumpControl.html' %} <!-- Include pump control UI -->
+        {% elif mode == 'manual' %} <!-- Conditional rendering for Manual mode -->
+            {% include 'ManualMode.html' %} <!-- Include content for Manual mode -->
+            {% include 'PumpControl.html' %} <!-- Include pump control UI -->
         {% endif %}
     </div>
 </div>
+
 
 <!-- Include Axios and Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+    // Wait for the DOM content to fully load before executing the script
     document.addEventListener("DOMContentLoaded", function() {
+        // Get the 2D rendering contexts for each chart
         const ctxTemperature = document.getElementById('temperatureChart').getContext('2d');
         const ctxHumidity = document.getElementById('humidityChart').getContext('2d');
         const ctxPH = document.getElementById('phChart').getContext('2d');
 
+        // Create the Temperature chart
         const temperatureChart = new Chart(ctxTemperature, {
-            type: 'line',
+            type: 'line', // Specify the chart type
             data: {
-                labels: [], // Will be filled dynamically
+                labels: [], // Array to hold time labels (will be filled dynamically)
                 datasets: [{
-                    label: 'Temperature (°C)',
-                    borderColor: '#ff6384',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    data: [],
-                    fill: true
+                    label: 'Temperature (°C)', // Label for the dataset
+                    borderColor: '#ff6384', // Color of the line
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Background color under the line
+                    data: [], // Array to hold temperature data points (will be filled dynamically)
+                    fill: true // Fill the area under the line
                 }]
             },
             options: {
-                responsive: true,
+                responsive: true, // Make the chart responsive to window resizing
                 plugins: {
-                    legend: { display: true },
+                    legend: { display: true }, // Display the legend
                     tooltip: {
                         callbacks: {
                             label: function(context) {
+                                // Customize the tooltip to show temperature value
                                 return `Temperature: ${context.raw} °C`;
                             }
                         }
@@ -79,34 +85,36 @@
                 },
                 scales: {
                     x: {
-                        title: { display: true, text: 'Time' }
+                        title: { display: true, text: 'Time' } // X-axis title
                     },
                     y: {
-                        title: { display: true, text: 'Temperature (°C)' }
+                        title: { display: true, text: 'Temperature (°C)' } // Y-axis title
                     }
                 }
             }
         });
 
+        // Create the Humidity chart
         const humidityChart = new Chart(ctxHumidity, {
-            type: 'line',
+            type: 'line', // Specify the chart type
             data: {
-                labels: [],
+                labels: [], // Array to hold time labels
                 datasets: [{
-                    label: 'Humidity (%)',
-                    borderColor: '#36a2eb',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    data: [],
-                    fill: true
+                    label: 'Humidity (%)', // Label for the dataset
+                    borderColor: '#36a2eb', // Color of the line
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Background color under the line
+                    data: [], // Array to hold humidity data points
+                    fill: true // Fill the area under the line
                 }]
             },
             options: {
-                responsive: true,
+                responsive: true, // Make the chart responsive
                 plugins: {
-                    legend: { display: true },
+                    legend: { display: true }, // Display the legend
                     tooltip: {
                         callbacks: {
                             label: function(context) {
+                                // Customize the tooltip to show humidity value
                                 return `Humidity: ${context.raw} %`;
                             }
                         }
@@ -114,34 +122,36 @@
                 },
                 scales: {
                     x: {
-                        title: { display: true, text: 'Time' }
+                        title: { display: true, text: 'Time' } // X-axis title
                     },
                     y: {
-                        title: { display: true, text: 'Humidity (%)' }
+                        title: { display: true, text: 'Humidity (%)' } // Y-axis title
                     }
                 }
             }
         });
 
+        // Create the pH Level chart
         const phChart = new Chart(ctxPH, {
-            type: 'line',
+            type: 'line', // Specify the chart type
             data: {
-                labels: [],
+                labels: [], // Array to hold time labels
                 datasets: [{
-                    label: 'pH Level',
-                    borderColor: '#4bc0c0',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    data: [],
-                    fill: true
+                    label: 'pH Level', // Label for the dataset
+                    borderColor: '#4bc0c0', // Color of the line
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Background color under the line
+                    data: [], // Array to hold pH data points
+                    fill: true // Fill the area under the line
                 }]
             },
             options: {
-                responsive: true,
+                responsive: true, // Make the chart responsive
                 plugins: {
-                    legend: { display: true },
+                    legend: { display: true }, // Display the legend
                     tooltip: {
                         callbacks: {
                             label: function(context) {
+                                // Customize the tooltip to show pH value
                                 return `pH: ${context.raw}`;
                             }
                         }
@@ -149,41 +159,49 @@
                 },
                 scales: {
                     x: {
-                        title: { display: true, text: 'Time' }
+                        title: { display: true, text: 'Time' } // X-axis title
                     },
                     y: {
-                        title: { display: true, text: 'pH Level' }
+                        title: { display: true, text: 'pH Level' } // Y-axis title
                     }
                 }
             }
         });
 
+        // Function to fetch sensor data from the API
         async function fetchSensorData() {
             try {
+                // Make a GET request to fetch sensor data
                 const response = await axios.get('http://127.0.0.1:8000/api/sensors');
-                const data = response.data;
+                const data = response.data; // Extract the data from the response
 
                 // Update readings in the DOM
-                document.getElementById('temperature').textContent = data.temperature + ' °C';
-                document.getElementById('humidity').textContent = data.humidity + '%';
-                document.getElementById('ph').textContent = data.ph;
+                document.getElementById('temperature').textContent = data.temperature + ' °C'; // Update temperature display
+                document.getElementById('humidity').textContent = data.humidity + '%'; // Update humidity display
+                document.getElementById('ph').textContent = data.ph; // Update pH display
 
-                // Update chart data
+                // Get the current time label
                 const timeLabel = new Date().toLocaleTimeString();
-                temperatureChart.data.labels.push(timeLabel);
-                temperatureChart.data.datasets[0].data.push(data.temperature);
-                temperatureChart.update();
+                
+                // Update chart data for Temperature
+                temperatureChart.data.labels.push(timeLabel); // Add new time label
+                temperatureChart.data.datasets[0].data.push(data.temperature); // Add new temperature data
+                temperatureChart.update(); // Update the chart
 
-                humidityChart.data.labels.push(timeLabel);
-                humidityChart.data.datasets[0].data.push(data.humidity);
-                humidityChart.update();
+                // Update chart data for Humidity
+                humidityChart.data.labels.push(timeLabel); // Add new time label
+                humidityChart.data.datasets[0].data.push(data.humidity); // Add new humidity data
+                humidityChart.update(); // Update the chart
 
-                phChart.data.labels.push(timeLabel);
-                phChart.data.datasets[0].data.push(data.ph);
-                phChart.update();
+                // Update chart data for pH Level
+                phChart.data.labels.push(timeLabel); // Add new time label
+                phChart.data.datasets[0].data.push(data.ph); // Add new pH data
+                phChart.update(); // Update the chart
 
             } catch (error) {
+                // Handle errors during the fetch
                 console.error('Error fetching sensor data:', error);
+                // Display error messages in the DOM
                 document.getElementById('temperature').textContent = 'Error loading temperature';
                 document.getElementById('humidity').textContent = 'Error loading humidity';
                 document.getElementById('ph').textContent = 'Error loading pH';
@@ -191,8 +209,9 @@
         }
 
         // Fetch sensor data on page load and every 2 seconds
-        fetchSensorData();
-        setInterval(fetchSensorData, 2000);
+        fetchSensorData(); // Initial fetch
+        setInterval(fetchSensorData, 2000); // Fetch every 2 seconds
     });
 </script>
+
 {% endblock %}
