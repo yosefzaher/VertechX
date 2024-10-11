@@ -6,12 +6,14 @@ from flask_login import LoginManager  # For user authentication and session mana
 from flask_cors import CORS # For Solve Cross-Origin Issues
 
 
-# Initialize the Flask application with the specified template folder
-app = Flask(__name__, template_folder='../Templates')
+# Initialize the Flask application with the specified template and static folders
+app = Flask(__name__, template_folder='../Templates', static_folder='../static')
+
 """
-Create a Flask application instance.
-- `__name__`: Tells Flask to look for static files and templates in the current folder.
-- `template_folder`: Points to the location where HTML templates are stored, set to '../Templates' relative to the current directory.
+This tells Flask:
+- `__name__`: To base all paths relative to the current file.
+- `template_folder`: HTML templates are located in '../Templates'.
+- `static_folder`: Static files (CSS, JS, images, icons) are located in '../static'.
 """
 
 # Solve Cross-Origin Issues
