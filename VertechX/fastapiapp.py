@@ -127,5 +127,12 @@ async def control_pump(pump: PumpControl):
     if pump.state in ["on", "off"] and pump.pump in pump_states:
         pump_states[pump.pump] = pump.state
         return {"message": f"Pump {pump.pump} turned {pump.state}"}
+        # if pump.pump in PUMP_PINS and pump.state in ["on", "off"]:
+        #     # Update the GPIO pin based on the pump state
+        #     if pump.state == "on":
+        #         GPIO.output(PUMP_PINS[pump.pump], GPIO.HIGH)  # Turn the pump on
+        #     else:
+        #         GPIO.output(PUMP_PINS[pump.pump], GPIO.LOW)   # Turn the pump off    
+    
     else:
         raise HTTPException(status_code=400, detail="Invalid state or pump number")
