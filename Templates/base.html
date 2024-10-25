@@ -255,7 +255,7 @@
                                 <span class="ml-2">{{ current_user.user_name }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ url_for('Profile_Page') }}">
                                     <i class="fas fa-user"></i> Profile
                                 </a>
                                 <a class="dropdown-item" href="#">
@@ -305,7 +305,7 @@
     {% endblock %}
 
     <!-- Navigation buttons (previous and next page) -->
-    {% if request.endpoint not in ['Signup_Page', 'Signin_Page' ,'Dashboard_Page'] %}
+    {% if request.endpoint not in ['Signup_Page', 'Signin_Page' ,'Dashboard_Page' ,'Profile_Page'] %}
         <div class="d-flex justify-content-between my-4">
             <!-- Left button to navigate to the previous page -->
             <a href="{{ url_for('previous_page', current_page=request.endpoint) }}" class="btn-icon-only">

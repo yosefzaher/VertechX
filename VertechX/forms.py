@@ -1,8 +1,9 @@
 # Importing necessary modules from Flask and Flask-WTF
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms import StringField, PasswordField, SubmitField 
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError ,Optional
 from VertechX.models import User  # Assuming 'User' model is imported from your app
+from flask_login import current_user
 
 # SignupForm class: Handles user registration with validation for username, email, and password confirmation
 class SignupForm(FlaskForm):
@@ -83,3 +84,30 @@ class SigninForm(FlaskForm):
     submit = SubmitField(label='Sign in : ')
 
 
+class ProfileForm(FlaskForm):
+    username = StringField(
+        label='User Name : ', 
+        validators=[Length(min=2, max=30), DataRequired()]
+    )
+    email = StringField(
+        label='Email Address : ', 
+        validators=[Email(), DataRequired()]
+    )
+    password = PasswordField(
+        label='New Password : ', 
+        validators=[Length(min=6), Optional()]
+    )
+    submit = SubmitField('Save Changes')
+
+    # Ensure unique username and email if they are changed
+    def validate_username(self, username):
+        if username.data != current_user.Username:
+            user = User.query.filter_by(Username=username.data).first()
+            if user:
+                raise ValidationError('Username is already in use. Please choose another one.')
+
+    def validate_email(self, email):
+        if email.data != current_user.Email_Address:
+            user = User.query.filter_by(Email_Address=email.data).first()
+            if user:
+                raise ValidationError('Email is already in use. Please choose another one.')

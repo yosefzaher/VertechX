@@ -4,7 +4,8 @@ from VertechX import app, db  # Import the app and db objects from your project
 from VertechX.models import User  # Import the User model
 from VertechX.forms import SignupForm, SigninForm  # Import form classes for signup and signin
 from flask_login import login_user, logout_user, login_required  # For user authentication and session management
-
+from flask_login import current_user  # To access the currently logged-in user
+from VertechX.forms import ProfileForm  # Add the ProfileForm we’ll create shortly
 
 
 # List of page endpoints to navigate between
@@ -172,6 +173,46 @@ def Dashboard_Page():
     return render_template('Dashboard.html', mode=mode)
 
 
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def Profile_Page():
+    form = ProfileForm()
+
+    if form.validate_on_submit():
+        # Update username and email
+        current_user.Username = form.username.data
+        current_user.Email_Address = form.email.data
+
+        # Update password only if a new one is provided
+        if form.password.data:
+            current_user.set_password(form.password.data)
+
+        # Commit the changes to the database
+        db.session.commit()
+        flash('Your profile has been updated.', 'success')
+        return redirect(url_for('Profile_Page'))
+
+    # Pre-populate the form with existing user data on GET request
+    elif request.method == 'GET':
+        form.username.data = current_user.Username
+        form.email.data = current_user.Email_Address
+
+    return render_template('Profile.html', form=form)
+
+
+@app.route('/delete_account', methods=['POST'])
+@login_required
+def delete_account():
+    user = current_user
+
+    # Delete the user from the database
+    db.session.delete(user)
+    db.session.commit()
+
+    # Log the user out
+    logout_user()
+    flash('Your account has been deleted.', 'info')
+    return redirect(url_for('Home_Page'))
 
 
 
@@ -180,59 +221,3 @@ def Dashboard_Page():
 
 
 
-
-
-# @app.route('/switch-mode/<mode>')
-# @login_required
-# def switch_mode(mode):
-#     """
-#     Serve the HTML content for either automatic or manual mode.
-#     """
-#     try:
-#         if mode == 'automatic':
-#             return render_template('AutomaticMode.html')
-#         elif mode == 'manual':
-#             return render_template('ManualMode.html')
-#         else:
-#             return "Invalid mode", 400
-#     except Exception as e:
-#         return str(e), 500 
-
-###############################################################################
-#                         The Control System                                  #
-#                                                                             #  
-###############################################################################
-
-# API endpoint to fetch sensor data
-# @app.route('/api/sensors', methods=['GET'])
-# @login_required
-# def get_sensor_data():
-    
-#     # Fetch sensor data
-#     humidity, temperature = 70, 35
-
-#     if humidity is not None and temperature is not None:
-#         sensor_data = {
-#             'temperature': round(temperature, 2),
-#             'humidity': round(humidity, 2)
-#         }
-#         return jsonify(sensor_data)
-#     else:
-#         return jsonify({'error': 'Failed to retrieve data'}), 500
-
-
-# # Fetch sensor data from the FastAPI service
-# @app.route('/api/get_sensor_data', methods=['GET'])
-# @login_required
-# def fetch_sensor_data_from_fastapi():
-#     try:
-#         # Send a request to the FastAPI microservice
-#         response = requests.get('http://127.0.0.1:5000/api/sensors')  # Adjust the URL if FastAPI is hosted elsewhere
-#         response.raise_for_status()  # Raise an exception for bad status codes
-#         data = response.json()  # Parse the JSON response
-
-#         # Return the sensor data as part of the Flask response
-#         return jsonify(data)
-    
-#     except requests.exceptions.RequestException as e:
-#         return jsonify({'error': str(e)}), 500

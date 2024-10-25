@@ -58,27 +58,24 @@
         const ctxPH1 = document.getElementById('phChart1').getContext('2d');
         const ctxPH2 = document.getElementById('phChart2').getContext('2d');
 
-        // Create the Temperature chart
+        // Create the Temperature bar chart
         const temperatureChart = new Chart(ctxTemperature, {
-            type: 'line', // Specify the chart type
+            type: 'bar', // Change to bar chart
             data: {
                 labels: [], // Array to hold time labels (will be filled dynamically)
                 datasets: [{
                     label: 'Temperature (°C)', // Label for the dataset
-                    borderColor: '#ff6384', // Color of the line
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Background color under the line
+                    backgroundColor: '#ff6384', // Color of the bars
                     data: [], // Array to hold temperature data points (will be filled dynamically)
-                    fill: true // Fill the area under the line
                 }]
             },
             options: {
-                responsive: true, // Make the chart responsive to window resizing
+                responsive: true,
                 plugins: {
-                    legend: { display: true }, // Display the legend
+                    legend: { display: true },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                // Customize the tooltip to show temperature value
                                 return `Temperature: ${context.raw} °C`;
                             }
                         }
@@ -95,27 +92,24 @@
             }
         });
 
-        // Create the Humidity chart
+        // Create the Humidity bar chart
         const humidityChart = new Chart(ctxHumidity, {
-            type: 'line', // Specify the chart type
+            type: 'bar', // Change to bar chart
             data: {
-                labels: [], // Array to hold time labels
+                labels: [],
                 datasets: [{
-                    label: 'Humidity (%)', // Label for the dataset
-                    borderColor: '#36a2eb', // Color of the line
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Background color under the line
-                    data: [], // Array to hold humidity data points
-                    fill: true // Fill the area under the line
+                    label: 'Humidity (%)',
+                    backgroundColor: '#36a2eb',
+                    data: [],
                 }]
             },
             options: {
-                responsive: true, // Make the chart responsive
+                responsive: true,
                 plugins: {
-                    legend: { display: true }, // Display the legend
+                    legend: { display: true },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                // Customize the tooltip to show humidity value
                                 return `Humidity: ${context.raw} %`;
                             }
                         }
@@ -123,36 +117,33 @@
                 },
                 scales: {
                     x: {
-                        title: { display: true, text: 'Time' } // X-axis title
+                        title: { display: true, text: 'Time' }
                     },
                     y: {
-                        title: { display: true, text: 'Humidity (%)' } // Y-axis title
+                        title: { display: true, text: 'Humidity (%)' }
                     }
                 }
             }
         });
 
-        // Create the pH1 Level chart
+        // Create the pH1 Level bar chart
         const phChart1 = new Chart(ctxPH1, {
-            type: 'line', // Specify the chart type
+            type: 'bar', // Change to bar chart
             data: {
-                labels: [], // Array to hold time labels
+                labels: [],
                 datasets: [{
-                    label: 'pH1 Level', // Label for the dataset
-                    borderColor: '#4bc0c0', // Color of the line
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Background color under the line
-                    data: [], // Array to hold pH data points
-                    fill: true // Fill the area under the line
+                    label: 'pH1 Level',
+                    backgroundColor: '#4bc0c0',
+                    data: [],
                 }]
             },
             options: {
-                responsive: true, // Make the chart responsive
+                responsive: true,
                 plugins: {
-                    legend: { display: true }, // Display the legend
+                    legend: { display: true },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                // Customize the tooltip to show pH value
                                 return `pH1: ${context.raw}`;
                             }
                         }
@@ -160,36 +151,33 @@
                 },
                 scales: {
                     x: {
-                        title: { display: true, text: 'Time' } // X-axis title
+                        title: { display: true, text: 'Time' }
                     },
                     y: {
-                        title: { display: true, text: 'pH1 Level' } // Y-axis title
+                        title: { display: true, text: 'pH1 Level' }
                     }
                 }
             }
         });
-      
-        // Create the pH2 Level chart
+
+        // Create the pH2 Level bar chart
         const phChart2 = new Chart(ctxPH2, {
-            type: 'line', // Specify the chart type
+            type: 'bar', // Change to bar chart
             data: {
-                labels: [], // Array to hold time labels
+                labels: [],
                 datasets: [{
-                    label: 'pH2 Level', // Label for the dataset
-                    borderColor: '#4bc0c0', // Color of the line
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Background color under the line
-                    data: [], // Array to hold pH data points
-                    fill: true // Fill the area under the line
+                    label: 'pH2 Level',
+                    backgroundColor: '#4bc0c0',
+                    data: [],
                 }]
             },
             options: {
-                responsive: true, // Make the chart responsive
+                responsive: true,
                 plugins: {
-                    legend: { display: true }, // Display the legend
+                    legend: { display: true },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                // Customize the tooltip to show pH value
                                 return `pH2: ${context.raw}`;
                             }
                         }
@@ -197,14 +185,15 @@
                 },
                 scales: {
                     x: {
-                        title: { display: true, text: 'Time' } // X-axis title
+                        title: { display: true, text: 'Time' }
                     },
                     y: {
-                        title: { display: true, text: 'pH2 Level' } // Y-axis title
+                        title: { display: true, text: 'pH2 Level' }
                     }
                 }
             }
-        });        
+        });
+    
 
         // Function to fetch sensor data from the API
         async function fetchSensorData() {
