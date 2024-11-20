@@ -1,4 +1,5 @@
 from fastapi import HTTPException ,FastAPI ,Request 
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel # BaseModel for defining data models used for request/response validation
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
@@ -136,3 +137,40 @@ async def control_pump(pump: PumpControl):
     
     else:
         raise HTTPException(status_code=400, detail="Invalid state or pump number")
+
+
+
+# Simulated LED state
+led_states = {"led1_state": "off"}  # Default state is 'off'
+
+# Request model for controlling LEDs
+class LEDControlRequest(BaseModel):
+    state: str  # "on" or "off"
+
+@fastapp.get("/api/led_states")
+async def get_led_states():
+    """
+    Endpoint to fetch the current state of all LEDs.
+    """
+    try:
+        return JSONResponse(content=led_states)
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": "Failed to fetch LED states", "details": str(e)})
+
+@fastapp.post("/api/led_control")
+async def control_led(led_request: LEDControlRequest):
+    """
+    Endpoint to update the state of the LED.
+    """
+    try:
+        # Validate the input state
+        if led_request.state not in ["on", "off"]:
+            raise HTTPException(status_code=400, detail="Invalid LED state. Use 'on' or 'off'.")
+
+        # Update the LED state
+        led_states["led1_state"] = led_request.state
+        return JSONResponse(content={"message": "LED state updated successfully", "new_state": led_request.state})
+    except HTTPException as e:
+        return JSONResponse(status_code=e.status_code, content={"error": e.detail})
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": "Failed to update LED state", "details": str(e)})

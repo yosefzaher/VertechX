@@ -1,50 +1,173 @@
-{% extends "base.html" %} <!-- Extending a base HTML template for consistent structure -->
-
-{% block title %}Dashboard{% endblock %} <!-- Setting the title of the page -->
-
-{% block content %}
-
 <style>
-    /* Active button style for the active mode */
-    .btn-active {
-        background-color: #4a90e2; /* Set a blue background for active button */
-        color: white; /* Set text color to white for visibility */
+    /* Container style for Sensor Readings */
+    .sensor-container {
+        background: #f7f7f7;
+        padding: 40px 0;
+        border-radius: 10px;
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
     }
 
-    /* Inactive button style for the inactive mode */
-    .btn-inactive {
-        background-color: transparent; /* Transparent background for inactive button */
-        color: #4a90e2; /* Set text color to the same blue as the active button */
-        border: 2px solid #4a90e2; /* Blue border for inactive button */
+    /* Style for the title */
+    .sensor-container h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+        text-transform: uppercase;
     }
 
-    /* Button hover effect to enhance user interaction */
-    .btn:hover {
-        opacity: 0.8; /* Slightly dim the button when hovered */
+    /* General card style */
+    .sensor-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .sensor-card:hover {
+        transform: translateY(-10px);
+    }
+
+    /* Style for the card body */
+    .card-body {
+        background: linear-gradient(135deg, #ffffff, #e6f7ff);
+        padding: 30px;
+        text-align: center;
+    }
+
+    /* Styling for the card title */
+    .card-title {
+        font-size: 1rem; /* Reduced font size for smaller screens */
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    /* Styling for the sensor value */
+    .reading-value {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #444;
+        margin-top: 20px;
+    }
+
+    /* Styling for the timestamp */
+    .sensor-time {
+        font-size: 0.875rem;
+        color: #888;
+        margin-top: 10px;
+    }
+
+    /* Icon style */
+    .sensor-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+
+    /* Colors for different sensor types */
+    .ph-sensor { color: #2ecc71; }
+    .temp-sensor { color: #f39c12; }
+    .humidity-sensor { color: #3498db; }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .card-title {
+            font-size: 0.875rem; /* Smaller font for medium screens */
+        }
+
+        .reading-value {
+            font-size: 2.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card-title {
+            font-size: 0.75rem; /* Smallest font size for very small screens */
+        }
+
+        .reading-value {
+            font-size: 2rem;
+        }
+
+        .sensor-icon {
+            font-size: 2.5rem;
+        }
     }
 </style>
 
-<div class="container mt-5 text-center"> <!-- Main container for the dashboard -->
-    <h1 class="display-4 font-weight-bold">Dashboard</h1> <!-- Main heading for the dashboard -->
-    <div class="mb-4"> <!-- Margin below the button group -->
-        <!-- Link for Automatic mode -->
-        <a href="{{ url_for('Dashboard_Page', mode='automatic') }}" class="btn {% if mode == 'automatic' %}btn-active{% else %}btn-inactive{% endif %} mr-2">Automatic</a>
-        <!-- Link for Manual mode -->
-        <a href="{{ url_for('Dashboard_Page', mode='manual') }}" class="btn {% if mode == 'manual' %}btn-active{% else %}btn-inactive{% endif %}">Manual</a>
-    </div>
-    
-    <div id="content-area"> <!-- Area to load content based on selected mode -->
-        {% if mode == 'automatic' %} <!-- Conditional rendering for Automatic mode -->
-            {% include 'SensorsReadings.html' %} <!-- Include content for Automatic mode -->
-            {% include 'PumpControl.html' %} <!-- Include pump control UI -->
-            {% include 'NewonLedControl.html' %} <!-- Include Neown Led Strip Control -->
-        {% elif mode == 'manual' %} <!-- Conditional rendering for Manual mode -->
-            {% include 'SensorsReadings.html' %} <!-- Include content for Manual mode -->
-            {% include 'PumpControl.html' %} <!-- Include pump control UI -->
-            {% include 'NewonLedControl.html' %} <!-- Include Neown Led Strip Control -->
-        {% endif %}
+<div class="container sensor-container">
+    <h2>Sensor Readings</h2>
+    <div class="row justify-content-center">
+        <!-- 1st pH Sensor -->
+        <div class="col-md-3 mb-4">
+            <div class="card sensor-card">
+                <div class="card-body">
+                    <i class="bi bi-droplet-fill sensor-icon ph-sensor"></i>
+                    <h5 class="card-title">1st pH</h5>
+                    <h3 id="ph1" class="reading-value">--</h3>
+                    <p id="ph1-time" class="sensor-time">Last updated: --</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2nd pH Sensor -->
+        <div class="col-md-3 mb-4">
+            <div class="card sensor-card">
+                <div class="card-body">
+                    <i class="bi bi-droplet-fill sensor-icon ph-sensor"></i>
+                    <h5 class="card-title">2nd pH</h5>
+                    <h3 id="ph2" class="reading-value">--</h3>
+                    <p id="ph2-time" class="sensor-time">Last updated: --</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Temperature Sensor -->
+        <div class="col-md-3 mb-4">
+            <div class="card sensor-card">
+                <div class="card-body">
+                    <i class="bi bi-thermometer-half sensor-icon temp-sensor"></i>
+                    <h5 class="card-title">Temp</h5>
+                    <h3 id="temperature" class="reading-value">--</h3>
+                    <p id="temp-time" class="sensor-time">Last updated: --</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Humidity Sensor -->
+        <div class="col-md-3 mb-4">
+            <div class="card sensor-card">
+                <div class="card-body">
+                    <i class="bi bi-cloud-haze2 sensor-icon humidity-sensor"></i>
+                    <h5 class="card-title">Humi</h5>
+                    <h3 id="humidity" class="reading-value">--</h3>
+                    <p id="humidity-time" class="sensor-time">Last updated: --</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+
+<!-- Charts Section for visual representation of sensor data -->
+<div class="row justify-content-center mb-4"> <!-- Row for sensor charts with center alignment -->
+    <div class="col-md-4"> <!-- Column for pH chart -->
+        <canvas id="phChart1" width="400" height="200"></canvas> <!-- Canvas element for pH1 chart -->
+    </div>
+    <div class="col-md-4"> <!-- Column for pH chart -->
+        <canvas id="phChart2" width="400" height="200"></canvas> <!-- Canvas element for pH2 chart -->
+    </div>    
+    <div class="col-md-4"> <!-- Column for temperature chart -->
+        <canvas id="temperatureChart" width="400" height="200"></canvas> <!-- Canvas element for temperature chart -->
+    </div>
+    <div class="col-md-4"> <!-- Column for humidity chart -->
+        <canvas id="humidityChart" width="400" height="200"></canvas> <!-- Canvas element for humidity chart -->
+    </div>
+</div>
+
 
 
 <!-- Include Axios and Chart.js -->
@@ -260,5 +383,3 @@
         setInterval(fetchSensorData, 2000); // Fetch every 2 seconds
     });
 </script>
-
-{% endblock %}
