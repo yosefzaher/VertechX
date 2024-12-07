@@ -160,13 +160,6 @@ async def control_pump(pump: PumpControl):
     if pump.state in ["on", "off"] and pump.pump in pump_states:
         pump_states[pump.pump] = pump.state
         return {"message": f"Pump {pump.pump} turned {pump.state}"}
-        # if pump.pump in PUMP_PINS and pump.state in ["on", "off"]:
-        #     # Update the GPIO pin based on the pump state
-        #     if pump.state == "on":
-        #         GPIO.output(PUMP_PINS[pump.pump], GPIO.HIGH)  # Turn the pump on
-        #     else:
-        #         GPIO.output(PUMP_PINS[pump.pump], GPIO.LOW)   # Turn the pump off    
-    
     else:
         raise HTTPException(status_code=400, detail="Invalid state or pump number")
 
@@ -206,3 +199,59 @@ async def control_led(led_request: LEDControlRequest):
         return JSONResponse(status_code=e.status_code, content={"error": e.detail})
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": "Failed to update LED state", "details": str(e)})
+
+
+
+# Dictionary to track the state of each valve (off by default)
+valves_control_status = {
+    1 : "off",  # Valve 1 state
+    2 : "off",  # Valve 2 state
+    3 : "off",  # Valve 3 state
+    4 : "off",  # Valve 4 state
+}
+
+# Pydantic model for validating input data for controlling valves
+from pydantic import BaseModel
+
+class SolenoidValvesState(BaseModel):
+    """
+    Pydantic model to represent the state of a solenoid valve.
+    The model validates the incoming data for valve state and valve number.
+    """
+    valve_state: str  # The state of the valve ('on' or 'off')
+    valve_num: int     # The valve number (1 to 4)
+
+# FastAPI GET endpoint to fetch the current state of all valves
+@fastapp.get("/api/valve_states")
+async def get_valves_states():
+    """
+    Endpoint to get the current states of all four valves.
+    It returns a dictionary with the state of each valve.
+    """
+    return {
+        "valve1_state": valves_control_status[1],  # State of Valve 1
+        "valve2_state": valves_control_status[2],  # State of Valve 2
+        "valve3_state": valves_control_status[3],  # State of Valve 3
+        "valve4_state": valves_control_status[4],  # State of Valve 4
+    }
+
+# FastAPI POST endpoint to control the state of a specific valve
+@fastapp.post("/api/valves_control")
+async def control_valves_states(Valve: SolenoidValvesState):
+    """
+    Endpoint to control the state of a specific valve.
+    The state can either be 'on' or 'off' for the given valve number (1 to 4).
+    - Valve number is passed in the request body.
+    - Valve state is passed as 'on' or 'off'.
+    If the input data is valid, the valve state will be updated.
+    """
+    global valves_control_status  # Access the global valves_control_status dictionary
+    
+    # Check if the provided valve state is valid ('on' or 'off') and the valve number is in the valid range (1 to 4)
+    if Valve.valve_state in ["on", "off"] and Valve.valve_num in valves_control_status:
+        # Update the state of the specified valve
+        valves_control_status[Valve.valve_num] = Valve.valve_state
+        return {"message": f"Pump {Valve.valve_num} turned {Valve.valve_state}"}  # Return success message
+    else:
+        # If the input data is invalid (either wrong state or valve number), raise an HTTP exception
+        raise HTTPException(status_code=400, detail="Invalid state or Valve number")

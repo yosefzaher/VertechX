@@ -1,138 +1,151 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <!-- Specifies the character encoding and viewport settings -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- Sets the title of the webpage -->
     <title>LED Control</title>
-
-    <!-- Embedded CSS for styling -->
     <style>
-        /* General body styling for aesthetics */
+        /* ========== Global Styles ========== */
         body {
-            font-family: 'Roboto', sans-serif; /* Modern font */
-            background-color: #f0f2f5; /* Light background */
-            margin: 0; /* Removes default margin */
-            padding: 0; /* Removes default padding */
-            color: #333; /* Neutral text color */
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
         }
 
-        /* Styles the main container for central alignment and enhanced appearance */
+        /* ========== Main Container ========== */
         .container {
-            max-width: 900px; /* Restricts container width */
-            margin: 50px auto; /* Centers the container vertically and horizontally */
-            padding: 40px; /* Adds internal spacing */
-            background-color: #ffffff; /* White background for contrast */
-            border-radius: 12px; /* Smooth edges */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
-            text-align: center; /* Centers text */
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            text-align: center;
         }
 
-        /* Styles for the header title */
+        /* ========== Header Styles ========== */
         h2 {
-            font-weight: 700; /* Bold font */
-            color: #1a73e8; /* Bright blue color */
-            margin-bottom: 30px; /* Spacing below the header */
-            font-size: 2.8em; /* Larger font size */
+            font-weight: 700;
+            color: #1a73e8;
+            margin-bottom: 30px;
+            font-size: 2.8em;
         }
 
-        /* Styles the LED control container */
+        /* ========== LED Control Section ========== */
         .led-container {
-            display: flex; /* Flexible layout */
-            justify-content: space-around; /* Spreads items evenly */
-            margin: 30px 0; /* Spacing around the container */
-            padding: 30px; /* Internal spacing */
-            border: 3px solid #1a73e8; /* Blue border */
-            border-radius: 12px; /* Rounded corners */
-            background: linear-gradient(145deg, #e3f2fd, #bbdefb); /* Gradient background */
-            box-shadow: 0 8px 20px rgba(26, 115, 232, 0.2); /* Soft shadow */
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+            display: flex;
+            flex-direction: column; /* Ensures vertical stacking */
+            justify-content: center; /* Centers items vertically */
+            align-items: center; /* Centers items horizontally */
+            margin: 30px 0;
+            padding: 30px;
+            border: 3px solid #2196F3;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+            box-shadow: 0 8px 20px rgba(26, 115, 232, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         /* Hover effect for the LED container */
         .led-container:hover {
-            transform: translateY(-5px); /* Moves container slightly upward */
-            box-shadow: 0 12px 30px rgba(26, 115, 232, 0.3); /* Deepens shadow */
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(26, 115, 232, 0.3);
         }
 
-        /* Styles for LED titles */
+        /* ========== LED Title ========== */
         .led-title {
-            font-size: 1.8em; /* Slightly larger font */
-            color: #1a73e8; /* Blue color for focus */
-            margin: 0; /* No extra margin */
-            font-weight: 600; /* Semi-bold font */
+            font-size: 1.8em;
+            color: #1a73e8;
+            margin: 0;
+            font-weight: 600;
         }
 
-        /* Styles for the toggle switch */
+        /* ========== Toggle Switch ========== */
         .switch {
-            position: relative; /* Positions relative to container */
-            display: inline-block; /* Inline block layout */
-            width: 80px; /* Width of the switch */
-            height: 40px; /* Height of the switch */
-            margin: 15px 0; /* Spacing above and below */
+            position: relative;
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+            margin: 15px 0;
+            transition: transform 0.3s ease;
         }
 
-        /* Styles for the slider within the switch */
+        /* The slider for the switch */
         .slider {
-            position: absolute; /* Positioned within the switch */
-            cursor: pointer; /* Cursor changes on hover */
-            top: 0; left: 0; right: 0; bottom: 0; /* Covers the switch area */
-            background-color: #d1d9e6; /* Default background color */
-            transition: background-color 0.4s ease; /* Smooth background color transition */
-            border-radius: 20px; /* Rounded edges */
-            box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1); /* Inset shadow for depth */
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #d1d9e6;
+            transition: background-color 0.4s ease, box-shadow 0.3s ease;
+            border-radius: 25px;
+            box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        /* Styles for the circular button inside the slider */
+        /* Circular button inside the slider */
         .slider:before {
-            position: absolute; /* Positioned within the slider */
-            content: ""; /* Empty content */
-            height: 34px; /* Height of the circle */
-            width: 34px; /* Width of the circle */
-            left: 3px; /* Left padding */
-            bottom: 3px; /* Bottom padding */
-            background-color: #ffffff; /* White color for the button */
-            border: 2px solid #bbb; /* Light border color */
-            transition: transform 0.4s ease, border-color 0.4s ease; /* Smooth movement */
-            border-radius: 50%; /* Makes it circular */
+            position: absolute;
+            content: "";
+            height: 42px;
+            width: 42px;
+            left: 4px;
+            bottom: 4px;
+            background-color: #ffffff;
+            border: 2px solid #bbb;
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.3s ease;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* Styles for the slider when the switch is toggled ON */
+        /* Switch slider when toggled ON */
         input:checked + .slider {
-            background-color: #1a73e8; /* Bright blue background */
+            background-color: #1a73e8;
+            box-shadow: 0 0 15px rgba(26, 115, 232, 0.4);
         }
 
         input:checked + .slider:before {
-            transform: translateX(40px); /* Moves the button to the right */
-            border-color: #1a73e8; /* Matches the blue theme */
+            transform: translateX(50px);
+            border-color: #1a73e8;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
-        /* Styles for the LED status text */
+        /* ========== LED Status Text ========== */
         .led-status {
-            font-size: 1.4em; /* Slightly larger text */
-            color: #666; /* Neutral text color */
-            margin-top: 20px; /* Spacing above */
-            font-weight: 500; /* Medium weight */
+            font-size: 1.4em;
+            color: #666;
+            margin-top: 20px;
+            font-weight: 500;
+            text-transform: capitalize;
         }
 
-        /* Styles when the LED is ON */
+        /* LED status when ON */
         .led-status.on {
-            color: #1a73e8; /* Blue for active state */
-            font-weight: 600; /* Semi-bold */
+            color: #bbb;
+            font-weight: 600;
+            text-transform: uppercase;
         }
 
-        /* Styles when the LED is OFF */
+        /* LED status when OFF */
         .led-status.off {
-            color: #1a73e8; /* Blue for inactive state */
-            font-weight: 600; /* Semi-bold */
+            color: #bbb;
+            font-weight: 600;
+            text-transform: uppercase;
         }
-    </style>
+
+        /* Hover effect for the switch */
+        .switch:hover .slider {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 25px rgba(26, 115, 232, 0.3);
+        }
+
+    </style>    
+    
 </head>
 <body>
+
     <!-- Main container for LED control -->
-    <div class="container">
+    <div id="led-section" class="container">
+        <!-- LED content -->
         <h2>LED Control</h2>
         <!-- LED control section -->
         <div class="led-container">
@@ -149,6 +162,7 @@
             </div>
         </div>
     </div>
+    
 
     <!-- Axios library for making HTTP requests -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -190,4 +204,4 @@
         });
     </script>
 </body>
-</html>
+

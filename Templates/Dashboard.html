@@ -36,10 +36,12 @@
     <div id="content-area"> <!-- Area to load content based on selected mode -->
         {% if mode == 'automatic' %} <!-- Conditional rendering for Automatic mode -->
             {% include 'SensorsReadings.html' %} <!-- Include content for Automatic mode -->
+            {% include 'SolenoidValves.html' %} <!-- Include content for Solenoid Valve Control -->
             {% include 'PumpControl.html' %} <!-- Include pump control UI -->
             {% include 'NewonLedControl.html' %} <!-- Include Neown Led Strip Control -->
         {% elif mode == 'manual' %} <!-- Conditional rendering for Manual mode -->
             {% include 'SensorsReadings.html' %} <!-- Include content for Manual mode -->
+            {% include 'SolenoidValves.html' %} <!-- Include content for Solenoid Valve Control -->
             {% include 'PumpControl.html' %} <!-- Include pump control UI -->
             {% include 'NewonLedControl.html' %} <!-- Include Neown Led Strip Control -->
         {% endif %}
