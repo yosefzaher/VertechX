@@ -20,6 +20,38 @@ fastapp.add_middleware(
     allow_headers=["*"],
 )
 
+
+# Pydantic model to define the structure of the greenhouse mode
+class GreenHouse_Mode(BaseModel):
+    mode: str  # This field will store the mode of the greenhouse, either 'automatic' or 'manual'
+
+# Default mode, initialized with 'automatic'
+green_house_mode = GreenHouse_Mode(mode="automatic")
+
+# POST endpoint to change the greenhouse mode
+@fastapp.post("/api/mode", response_model=GreenHouse_Mode)
+async def get_greenhouse_mode(_mode: GreenHouse_Mode):
+    """
+    API endpoint to change the current mode of the greenhouse.
+
+    This endpoint accepts a POST request with the new mode to be set 
+    for the greenhouse. The mode can be either 'automatic' or 'manual'.
+    The default mode is set to 'automatic', but can be updated by this endpoint.
+
+    Parameters:
+    - _mode: A GreenHouse_Mode object that contains the new mode value.
+
+    Returns:
+    - green_house_mode: The updated GreenHouse_Mode object, which includes the newly set mode.
+    """
+
+    # Update the greenhouse mode to the new mode provided in the request
+    green_house_mode.mode = _mode.mode
+
+    # Return the updated mode as the response
+    return green_house_mode
+
+
 # Define a data model for sensor readings using Pydantic
 class SensorData(BaseModel):
     """

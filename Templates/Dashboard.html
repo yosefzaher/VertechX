@@ -28,9 +28,9 @@
     <h1 class="display-4 font-weight-bold">Dashboard</h1> <!-- Main heading for the dashboard -->
     <div class="mb-4"> <!-- Margin below the button group -->
         <!-- Link for Automatic mode -->
-        <a href="{{ url_for('Dashboard_Page', mode='automatic') }}" class="btn {% if mode == 'automatic' %}btn-active{% else %}btn-inactive{% endif %} mr-2">Automatic</a>
+        <a href="{{ url_for('Dashboard_Page', mode='automatic') }}" id="AutomaticModeBtn" class="btn {% if mode == 'automatic' %}btn-active{% else %}btn-inactive{% endif %} mr-2">Automatic</a>
         <!-- Link for Manual mode -->
-        <a href="{{ url_for('Dashboard_Page', mode='manual') }}" class="btn {% if mode == 'manual' %}btn-active{% else %}btn-inactive{% endif %}">Manual</a>
+        <a href="{{ url_for('Dashboard_Page', mode='manual') }}" id="ManualModeBtn" class="btn {% if mode == 'manual' %}btn-active{% else %}btn-inactive{% endif %}">Manual</a>
     </div>
     
     <div id="content-area"> <!-- Area to load content based on selected mode -->
@@ -45,5 +45,47 @@
         {% endif %}
     </div>
 </div>
+
+<!-- Axios library for making HTTP requests -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        const AutomaticModeBtn = document.getElementById("AutomaticModeBtn");
+        const ManualModeBtn = document.getElementById("ManualModeBtn");
+        
+        async function ChangeMode(mode) {
+            try {
+                const response = await axios.post("http://127.0.0.1:8000/api/mode", { mode: mode });
+                console.log("Mode Changed to:", response.data.mode);
+            } catch (error) {
+                console.error("Error in Changing Mode:", error);
+            }
+        }
+
+        AutomaticModeBtn.addEventListener("click", function() {
+            // Switch to automatic mode
+            if (!AutomaticModeBtn.classList.contains('btn-active')) {
+                // Make Automatic button active and Manual button inactive
+                AutomaticModeBtn.classList.add('btn-active');
+                ManualModeBtn.classList.remove('btn-active');
+                ManualModeBtn.classList.add('btn-inactive');
+                ChangeMode('automatic'); // Send the mode change request
+            }
+        });
+
+        ManualModeBtn.addEventListener("click", function() {
+            // Switch to manual mode
+            if (!ManualModeBtn.classList.contains('btn-active')) {
+                // Make Manual button active and Automatic button inactive
+                ManualModeBtn.classList.add('btn-active');
+                AutomaticModeBtn.classList.remove('btn-active');
+                AutomaticModeBtn.classList.add('btn-inactive');
+                ChangeMode('manual'); // Send the mode change request
+            }
+        });
+
+    });
+</script>
 
 {% endblock %}
