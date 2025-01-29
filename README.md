@@ -64,3 +64,62 @@ The system supports two modes:
    ```bash
    git clone https://github.com/your-username/VertechX.git
    cd VertechX
+   ```
+2. **Activate the Virtual Environment**:
+   ```bash
+   source venv/bin/activate
+   ```
+3. **Run the Flask Server**:
+   ```bash
+   python3 run.py
+   ```
+   This will start the Flask web application. Open your browser and go to #http://127.0.0.1:5000
+4. **Run the FastAPI Server**:
+   ```bash
+   cd VertechX/fastapiapp
+   uvicorn fastapp:fastapp --reload
+   ```
+   This will start the FastAPI server for IoT communication. Open your browser and go to #http://127.0.0.1:8000/docs to see The APIs Automatic Documentation
+5. **Connect to the Raspberry Pi**:
+   Ensure the Raspberry Pi is connected to the same network and configured to communicate with the FastAPI server.
+---
+
+## 🌟 Features
+
+### Web Application (Flask)
+- **User Authentication**: Sign up, log in, and manage user accounts.
+- **Dashboard**: Monitor sensor data (pH, humidity, temperature) and control the system.
+- **Manual Mode**: Full control over pumps and valves.
+
+### IoT Integration (FastAPI)
+- **Sensor Data**: Read real-time data from pH, humidity, and temperature sensors.
+- **Hardware Control**: Control pumps and solenoid valves via the Raspberry Pi.
+
+---
+
+## 📸 Project Images
+
+### Fabrication
+<!-- Add your fabrication images here -->
+![Fabrication Image 1](path/to/fabrication_image1.jpg)
+![Fabrication Image 2](path/to/fabrication_image2.jpg)
+
+### Software
+<!-- Add your software screenshots here -->
+![Web Application Screenshot](path/to/web_app_screenshot.png)
+![FastAPI Dashboard](path/to/fastapi_dashboard.png)
+
+---
+
+## 📫 Contact Me
+
+If you have any questions or want to collaborate, feel free to reach out:
+- **Email**: your.email@example.com
+- **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/your-profile)
+- **GitHub**: [Your GitHub Profile](https://github.com/your-username)
+
+---
+
+⭐️ Feel free to explore the repository and contribute to the project! If you find it useful, don't forget to give it a ⭐️!
+
+   
