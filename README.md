@@ -73,13 +73,13 @@ The system supports two modes:
    ```bash
    python3 run.py
    ```
-   This will start the Flask web application. Open your browser and go to #http://127.0.0.1:5000
+   This will start the Flask web application. Open your browser and go to [http://127.0.0.1:5000]
 4. **Run the FastAPI Server**:
    ```bash
    cd VertechX/fastapiapp
    uvicorn fastapp:fastapp --reload
    ```
-   This will start the FastAPI server for IoT communication. Open your browser and go to #http://127.0.0.1:8000/docs to see The APIs Automatic Documentation
+   This will start the FastAPI server for IoT communication. Open your browser and go to [http://127.0.0.1:8000/docs] to see The APIs Automatic Documentation
 5. **Connect to the Raspberry Pi**:
    Ensure the Raspberry Pi is connected to the same network and configured to communicate with the FastAPI server.
 ---
@@ -114,9 +114,9 @@ The system supports two modes:
 ## 📫 Contact Me
 
 If you have any questions or want to collaborate, feel free to reach out:
-- **Email**: your.email@example.com
-- **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/your-profile)
-- **GitHub**: [Your GitHub Profile](https://github.com/your-username)
+- **Email**: zaheryosef72@gmail.com
+- **LinkedIn**: [Your LinkedIn Profile](www.linkedin.com/in/yosef-zaher)
+- **GitHub**: [Your GitHub Profile](https://github.com/yosefzaher)
 
 ---
 
