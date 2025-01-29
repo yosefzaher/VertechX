@@ -101,8 +101,8 @@ The system supports two modes:
 
 ### Fabrication
 <!-- Add your fabrication images here -->
-![Fabrication Image 1](https://media.licdn.com/dms/image/v2/D4D22AQHxsF4QLt7GWw/feedshare-shrink_2048_1536/B4DZSKAfglHkA4-/0/1737482174329?e=1741219200&v=beta&t=3StwCUoG-V_5fCHih1CpiM_rgp_g-PrxWGDdjjL6a_A)
-![Fabrication Image 2](path/to/fabrication_image2.jpg)
+![Control Unit](https://media.licdn.com/dms/image/v2/D4D22AQHxsF4QLt7GWw/feedshare-shrink_2048_1536/B4DZSKAfglHkA4-/0/1737482174329?e=1741219200&v=beta&t=3StwCUoG-V_5fCHih1CpiM_rgp_g-PrxWGDdjjL6a_A)
+![Control Unit](blob:https://web.whatsapp.com/9a93990e-a61c-41d0-818a-d538361de9e0)
 
 ### Software
 <!-- Add your software screenshots here -->
