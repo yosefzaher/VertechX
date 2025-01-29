@@ -102,7 +102,7 @@ The system supports two modes:
 ### Fabrication
 <!-- Add your fabrication images here -->
 ![Control Unit](https://media.licdn.com/dms/image/v2/D4D22AQHxsF4QLt7GWw/feedshare-shrink_2048_1536/B4DZSKAfglHkA4-/0/1737482174329?e=1741219200&v=beta&t=3StwCUoG-V_5fCHih1CpiM_rgp_g-PrxWGDdjjL6a_A)
-![Control Unit](blob:https://web.whatsapp.com/9a93990e-a61c-41d0-818a-d538361de9e0)
+![Control Unit](https://media.licdn.com/dms/image/v2/D4D22AQH6Oa5_i2fNOQ/feedshare-shrink_2048_1536/B4DZSKbG2YHIAw-/0/1737489186738?e=1741219200&v=beta&t=8ZG6Fpa7GleDVQZZg_nE_cMjtyMOvKvP6OW6TaIp1nQ)
 
 ### Software
 <!-- Add your software screenshots here -->
