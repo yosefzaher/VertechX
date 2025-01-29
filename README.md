@@ -110,8 +110,8 @@ The system supports two modes:
 
 If you have any questions or want to collaborate, feel free to reach out:
 - **Email**: zaheryosef72@gmail.com
-- **LinkedIn**: [Your LinkedIn Profile](www.linkedin.com/in/yosef-zaher)
-- **GitHub**: [Your GitHub Profile](https://github.com/yosefzaher)
+- **LinkedIn**: www.linkedin.com/in/yosef-zaher
+- **GitHub**: https://github.com/yosefzaher
 
 ---
 
