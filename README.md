@@ -38,16 +38,29 @@ The system supports two modes:
 
 ## 📂 Project Structure
 ```bash
-VertechX/
-├── VertechX/ # Main Flask application
-│ ├── templates/ # HTML templates for the web app
-│ ├── static/ # CSS, JS, and other static files
-│ ├── models.py # Database models (SQLAlchemy)
-│ ├── routes.py # Flask routes
-│ ├── run.py # Flask application entry point
-├── fastapiapp/ # FastAPI application
-│ ├── fastapp.py # FastAPI routes for IoT control
-├── venv/ # Virtual environment
-├── README.md # Project documentation
+  VertechX/
+  ├── VertechX/ # Main Flask application
+  │ ├── templates/ # HTML templates for the web app
+  │ ├── static/ # CSS, JS, and other static files
+  │ ├── models.py # Database models (SQLAlchemy)
+  │ ├── routes.py # Flask routes
+  │ ├── run.py # Flask application entry point
+  ├── fastapiapp/ # FastAPI application
+  │ ├── fastapp.py # FastAPI routes for IoT control
+  ├── venv/ # Virtual environment
+  ├── README.md # Project documentation
 
 ---
+
+## 🚀 How to Run the Project
+
+### Prerequisites
+- Python 3.x
+- Raspberry Pi (for hardware control)
+- Installed libraries: `flask`, `fastapi`, `sqlalchemy`, `uvicorn`
+
+### Steps
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/your-username/VertechX.git
+   cd VertechX
