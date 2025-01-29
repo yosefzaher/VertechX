@@ -49,7 +49,7 @@ The system supports two modes:
   │ ├── fastapp.py # FastAPI routes for IoT control
   ├── venv/ # Virtual environment
   ├── README.md # Project documentation
-
+```
 ---
 
 ## 🚀 How to Run the Project
