@@ -4,25 +4,7 @@
 
 {% block content %}
 
-<style>
-    /* Active button style for the active mode */
-    .btn-active {
-        background-color: #4a90e2; /* Set a blue background for active button */
-        color: white; /* Set text color to white for visibility */
-    }
-
-    /* Inactive button style for the inactive mode */
-    .btn-inactive {
-        background-color: transparent; /* Transparent background for inactive button */
-        color: #4a90e2; /* Set text color to the same blue as the active button */
-        border: 2px solid #4a90e2; /* Blue border for inactive button */
-    }
-
-    /* Button hover effect to enhance user interaction */
-    .btn:hover {
-        opacity: 0.8; /* Slightly dim the button when hovered */
-    }
-</style>
+<link rel="stylesheet" href="/static/css/Dashboard.css">
 
 <div class="container mt-5 text-center"> <!-- Main container for the dashboard -->
     <h1 class="display-4 font-weight-bold">Dashboard</h1> <!-- Main heading for the dashboard -->
@@ -50,44 +32,6 @@
 
 <!-- Axios library for making HTTP requests -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        
-        const AutomaticModeBtn = document.getElementById("AutomaticModeBtn");
-        const ManualModeBtn = document.getElementById("ManualModeBtn");
-        
-        async function ChangeMode(mode) {
-            try {
-                const response = await axios.post("http://127.0.0.1:8000/api/mode", { mode: mode });
-                console.log("Mode Changed to:", response.data.mode);
-            } catch (error) {
-                console.error("Error in Changing Mode:", error);
-            }
-        }
-
-        AutomaticModeBtn.addEventListener("click", function() {
-            // Switch to automatic mode
-            if (!AutomaticModeBtn.classList.contains('btn-active')) {
-                // Make Automatic button active and Manual button inactive
-                AutomaticModeBtn.classList.add('btn-active');
-                ManualModeBtn.classList.remove('btn-active');
-                ManualModeBtn.classList.add('btn-inactive');
-                ChangeMode('automatic'); // Send the mode change request
-            }
-        });
-
-        ManualModeBtn.addEventListener("click", function() {
-            // Switch to manual mode
-            if (!ManualModeBtn.classList.contains('btn-active')) {
-                // Make Manual button active and Automatic button inactive
-                ManualModeBtn.classList.add('btn-active');
-                AutomaticModeBtn.classList.remove('btn-active');
-                AutomaticModeBtn.classList.add('btn-inactive');
-                ChangeMode('manual'); // Send the mode change request
-            }
-        });
-
-    });
-</script>
+<script src="/static/js/Dashboard.js"></script>
 
 {% endblock %}

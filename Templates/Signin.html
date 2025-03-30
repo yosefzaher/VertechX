@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block content %}
+
+    <link rel="stylesheet" href="/static/css/Signin.css">
+
     <div class="container mt-5">
         <h2 class="text-center text-dark mb-4">Welcome Back</h2>
         <!-- Ensure the form uses POST method and includes CSRF token -->
@@ -28,46 +31,5 @@
         </p>
     </div>
 
-    <style>
-        /* Custom Styles for the Login Page */
-        body {
-            background-color: #f8f9fa; /* Light background for the page */
-        }
-        
-        .form-login {
-            background-color: #ffffff; /* Light background for the form */
-            border-radius: 8px; /* Rounded corners */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        }
-        
-        .form-group label {
-            font-weight: bold; /* Bold labels */
-            font-size: 14px;  /* Adjust text size */
-        }
-
-        .form-control {
-            font-size: 16px; /* Larger input text */
-        }
-        
-        .btn-primary {
-            background-color: #28a745; /* Bootstrap success color */
-            border-color: #28a745; /* Match border color with background */
-            transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
-        }
-
-        .btn-primary:hover {
-            background-color: #218838; /* Darker green on hover */
-            border-color: #1e7e34; /* Match border color on hover */
-        }
-
-        /* Link styling */
-        .text-primary {
-            text-decoration: underline; /* Underline for better visibility */
-        }
-
-        .text-primary:hover {
-            color: #218838; /* Change color on hover */
-        }
-    </style>
 
 {% endblock %}

@@ -1,0 +1,164 @@
+/* Basic styling for the body element */
+body {
+    font-family: 'Roboto', sans-serif; /* Set the font for the page */
+    background-color: #f4f6f8; /* Light gray background color */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+/* Styling for the main container */
+.container {
+    max-width: 900px; /* Maximum width for the container */
+    margin: 40px auto; /* Center the container with margin on top and bottom */
+    padding: 40px; /* Padding inside the container */
+    background-color: #ffffff; /* White background for the container */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center; /* Center text inside the container */
+}
+
+/* Styling for the heading */
+h2 {
+    font-weight: bold; /* Bold text */
+    color: #333; /* Dark gray color */
+    margin-bottom: 40px; /* Space below the heading */
+    font-size: 2.5em; /* Large font size */
+}
+
+/* Styling for the pump container */
+.pump-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-around; /* Space items evenly */
+    margin: 30px 0; /* Margin above and below the pump container */
+    padding: 30px; /* Padding inside the pump container */
+    border: 2px solid #2196F3; /* Blue border */
+    border-radius: 10px; /* Rounded corners */
+    background-color: #e3f2fd; /* Light blue background */
+    transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for pump container */
+.pump-container:hover {
+    transform: translateY(-3px); /* Slightly lift the container */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Increase shadow depth */
+}
+
+/* Styling for pump titles */
+.pump-title {
+    font-size: 1.6em; /* Font size for pump titles */
+    color: #2196F3; /* Blue color for titles */
+    margin: 0; /* Remove margin */
+}
+
+/* Styling for switch elements */
+.switch {
+    position: relative; /* Positioning context for the slider */
+    display: inline-block; /* Inline-block display */
+    width: 75px; /* Width of the switch */
+    height: 38px; /* Height of the switch */
+    margin: 15px 0; /* Vertical margin */
+}
+
+/* Styling for the slider */
+.slider {
+    position: absolute; /* Positioning context */
+    cursor: pointer; /* Change cursor to pointer */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    right: 0; /* Align to the right */
+    bottom: 0; /* Align to the bottom */
+    background-color: #ccc; /* Gray background */
+    transition: background-color 0.4s; /* Smooth background color transition */
+    border-radius: 20px; /* Rounded corners */
+}
+
+/* Styling for the slider's knob */
+.slider:before {
+    position: absolute; /* Positioning context */
+    content: ""; /* Required for pseudo-element */
+    height: 32px; /* Height of the knob */
+    width: 32px; /* Width of the knob */
+    left: 3px; /* Left alignment */
+    bottom: 3px; /* Bottom alignment */
+    background-color: white; /* White knob */
+    transition: transform 0.4s; /* Smooth knob movement */
+    border-radius: 50%; /* Make the knob round */
+}
+
+/* Active state styles for the slider */
+input:checked + .slider {
+    background-color: #2196F3; /* Change background color when checked */
+}
+
+input:checked + .slider:before {
+    transform: translateX(37px); /* Move the knob to the right when checked */
+}
+
+/* Styling for pump status text */
+.pump-status {
+    font-size: 1.3em; /* Font size for status */
+    color: #666; /* Gray color */
+    margin-top: 15px; /* Space above the status */
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 600px) {
+    .pump-container {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center items */
+        padding: 20px; /* Reduce padding */
+    }
+}
+
+/* General styling for reading values */
+.reading-value {
+    font-size: 3rem; /* Larger font size for visibility */
+    font-weight: bold; /* Bold text */
+    color: #4a90e2; /* Blue color for emphasis */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    margin: 10px 0; /* Vertical spacing */
+}
+
+/* Styling for headings */
+.card-title {
+    font-size: 1.5rem; /* Increased font size for titles */
+    font-weight: 600; /* Semi-bold text */
+    color: #333; /* Dark gray color for better contrast */
+    text-transform: uppercase; /* Uppercase for a modern look */
+}
+
+/* Dashboard title styling */
+h1.display-4 {
+    font-size: 3rem; /* Increased font size */
+    color: #4a90e2; /* Blue color */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+}
+
+/* Subtitle styling */
+h2.h3 {
+    font-size: 2rem; /* Increased font size */
+    color: #555; /* Slightly lighter color */
+    margin-bottom: 20px; /* Margin for spacing */
+}
+
+/* Button styles for a modern look */
+.btn {
+    font-weight: bold; /* Bold text */
+    border-radius: 30px; /* Rounded buttons */
+    padding: 10px 20px; /* Padding for larger buttons */
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 600px) {
+    .reading-value {
+        font-size: 2.5rem; /* Adjust font size on smaller screens */
+    }
+
+    h1.display-4 {
+        font-size: 2.5rem; /* Adjust title size */
+    }
+
+    h2.h3 {
+        font-size: 1.5rem; /* Adjust subtitle size */
+    }
+}

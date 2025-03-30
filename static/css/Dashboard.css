@@ -1,0 +1,17 @@
+/* Active button style for the active mode */
+.btn-active {
+    background-color: #4a90e2; /* Set a blue background for active button */
+    color: white; /* Set text color to white for visibility */
+}
+
+/* Inactive button style for the inactive mode */
+.btn-inactive {
+    background-color: transparent; /* Transparent background for inactive button */
+    color: #4a90e2; /* Set text color to the same blue as the active button */
+    border: 2px solid #4a90e2; /* Blue border for inactive button */
+}
+
+/* Button hover effect to enhance user interaction */
+.btn:hover {
+    opacity: 0.8; /* Slightly dim the button when hovered */
+}

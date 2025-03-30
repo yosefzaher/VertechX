@@ -72,3 +72,4 @@ Import the routes for the Flask app from the VertechX module.
 - This includes the definitions of all the URL endpoints and associated view functions.
 """
 
+from VertechX import fastapiapp

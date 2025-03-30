@@ -6,6 +6,7 @@ from fastapi.templating import Jinja2Templates
 
 
 
+
 # Initialize the FastAPI app
 fastapp = FastAPI()
 
@@ -28,28 +29,6 @@ class GreenHouse_Mode(BaseModel):
 # Default mode, initialized with 'automatic'
 green_house_mode = GreenHouse_Mode(mode="automatic")
 
-# POST endpoint to change the greenhouse mode
-@fastapp.post("/api/mode", response_model=GreenHouse_Mode)
-async def get_greenhouse_mode(_mode: GreenHouse_Mode):
-    """
-    API endpoint to change the current mode of the greenhouse.
-
-    This endpoint accepts a POST request with the new mode to be set 
-    for the greenhouse. The mode can be either 'automatic' or 'manual'.
-    The default mode is set to 'automatic', but can be updated by this endpoint.
-
-    Parameters:
-    - _mode: A GreenHouse_Mode object that contains the new mode value.
-
-    Returns:
-    - green_house_mode: The updated GreenHouse_Mode object, which includes the newly set mode.
-    """
-
-    # Update the greenhouse mode to the new mode provided in the request
-    green_house_mode.mode = _mode.mode
-
-    # Return the updated mode as the response
-    return green_house_mode
 
 
 # Define a data model for sensor readings using Pydantic
@@ -155,11 +134,18 @@ async def control_pump(pump: PumpControl):
     Raises:
     - HTTPException 400: If the state provided is not 'on' or 'off', 
                          or if the pump number is invalid.
+    - HTTPException 500: If there is any error in GPIO.   
     """
     global pump_states
     if pump.state in ["on", "off"] and pump.pump in pump_states:
-        pump_states[pump.pump] = pump.state
-        return {"message": f"Pump {pump.pump} turned {pump.state}"}
+        pump_states[pump.pump] = pump.state            
+
+        try :
+            pass
+        except Exception as e :
+            raise HTTPException(status_code=500 ,detail=f"GPIO Error : {str(e)}")
+        
+        return  {"message": f"Pump {pump.pump} turned {pump.state}"}    
     else:
         raise HTTPException(status_code=400, detail="Invalid state or pump number")
 
@@ -194,6 +180,12 @@ async def control_led(led_request: LEDControlRequest):
 
         # Update the LED state
         led_states["led1_state"] = led_request.state
+        
+        try : 
+            pass
+        except Exception as e :
+            raise HTTPException(status_code=500 ,detail=f"Error in Gpio : {str(e)}")   
+
         return JSONResponse(content={"message": "LED state updated successfully", "new_state": led_request.state})
     except HTTPException as e:
         return JSONResponse(status_code=e.status_code, content={"error": e.detail})
@@ -204,19 +196,16 @@ async def control_led(led_request: LEDControlRequest):
 
 # Dictionary to track the state of each valve (off by default)
 valves_control_status = {
-    1 : "off",  # Valve 1 state
-    2 : "off",  # Valve 2 state
-    3 : "off",  # Valve 3 state
-    4 : "off",  # Valve 4 state
+    1: "off",  # Valve 1 state
+    2: "off",  # Valve 2 state
+    3: "off",  # Valve 3 state
+    4: "off",  # Valve 4 state
 }
 
-# Pydantic model for validating input data for controlling valves
-from pydantic import BaseModel
 
 class SolenoidValvesState(BaseModel):
     """
     Pydantic model to represent the state of a solenoid valve.
-    The model validates the incoming data for valve state and valve number.
     """
     valve_state: str  # The state of the valve ('on' or 'off')
     valve_num: int     # The valve number (1 to 4)
@@ -226,13 +215,12 @@ class SolenoidValvesState(BaseModel):
 async def get_valves_states():
     """
     Endpoint to get the current states of all four valves.
-    It returns a dictionary with the state of each valve.
     """
     return {
-        "valve1_state": valves_control_status[1],  # State of Valve 1
-        "valve2_state": valves_control_status[2],  # State of Valve 2
-        "valve3_state": valves_control_status[3],  # State of Valve 3
-        "valve4_state": valves_control_status[4],  # State of Valve 4
+        "valve1_state": valves_control_status[1], 
+        "valve2_state": valves_control_status[2],
+        "valve3_state": valves_control_status[3],
+        "valve4_state": valves_control_status[4],
     }
 
 # FastAPI POST endpoint to control the state of a specific valve
@@ -241,9 +229,6 @@ async def control_valves_states(Valve: SolenoidValvesState):
     """
     Endpoint to control the state of a specific valve.
     The state can either be 'on' or 'off' for the given valve number (1 to 4).
-    - Valve number is passed in the request body.
-    - Valve state is passed as 'on' or 'off'.
-    If the input data is valid, the valve state will be updated.
     """
     global valves_control_status  # Access the global valves_control_status dictionary
     
@@ -251,7 +236,14 @@ async def control_valves_states(Valve: SolenoidValvesState):
     if Valve.valve_state in ["on", "off"] and Valve.valve_num in valves_control_status:
         # Update the state of the specified valve
         valves_control_status[Valve.valve_num] = Valve.valve_state
-        return {"message": f"Pump {Valve.valve_num} turned {Valve.valve_state}"}  # Return success message
+
+        # # Control the GPIO pin based on the valve state
+        # if Valve.valve_state == "on":
+        #     gpio.output(globals()[f"valve{Valve.valve_num}_pin"], gpio.HIGH)  # Turn the valve on
+        # else:
+        #     gpio.output(globals()[f"valve{Valve.valve_num}_pin"], gpio.LOW)  # Turn the valve off
+
+        return {"message": f"Valve {Valve.valve_num} turned {Valve.valve_state}"}
     else:
         # If the input data is invalid (either wrong state or valve number), raise an HTTP exception
         raise HTTPException(status_code=400, detail="Invalid state or Valve number")

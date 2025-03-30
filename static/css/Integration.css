@@ -1,0 +1,59 @@
+/* Custom styles for card hover effect */
+.transition-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%; /* Allow cards to grow taller */
+    background-color: #f8f9fa;
+}
+
+.transition-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+}
+
+/* Custom styles for button hover effect */
+.transition-btn {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.transition-btn:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Styles to ensure cards are horizontally aligned and responsive */
+#cardContainer {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap; /* Prevent wrapping */
+}
+
+.card {
+    height:  auto;
+    min-width: 300px; /* Ensuring each card has a smaller width */
+    max-width: 350px; /* Limiting the maximum width for better layout */
+    margin-right: 1rem; /* Space between cards */
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Custom font styles */
+.card-title {
+    font-size: 1.4rem; /* Increase font size */
+    font-weight: bold; /* Bold font for titles */
+    margin-bottom: 0.5rem; /* Space between title and text */
+    color: #333;
+}
+
+/* Card text fixes to prevent overflow and ensure readability */
+.card-text {
+    font-size: 1.1rem; /* Keep this font size */
+    text-align: center; /* Center the text */
+    color: #555;
+    word-wrap: break-word; /* Ensure long words wrap to the next line */
+    overflow: hidden; /* Prevent text overflow */
+    text-overflow: ellipsis; /* Add ellipsis to indicate overflowed text */
+    white-space: normal; /* Ensure multi-line text instead of one long line */
+    max-height: 3.6rem; /* Ensure text block does not grow too tall (adjust as needed) */
+    line-height: 1.2; /* Line height for better readability */
+}
