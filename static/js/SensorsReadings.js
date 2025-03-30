@@ -86,5 +86,5 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     fetchSensorData();
-    setInterval(fetchSensorData, 2000);
+    setInterval(fetchSensorData, 4000);
 });
