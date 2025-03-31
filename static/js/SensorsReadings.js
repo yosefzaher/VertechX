@@ -85,6 +85,19 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    async function CheckAutoMode() {
+        try{
+            const response = await axios.get("http://127.0.0.1:5000/api/get_mode") ;
+            AutoModeEnabled = response.data.mode === "manual" ;
+        }
+        catch(error)
+        {
+            console.error("Error checking Auto Mode status:", error);
+        }
+    }
+
     fetchSensorData();
-    setInterval(fetchSensorData, 4000);
+    setInterval(() =>{
+        fetchSensorData() ;
+    },3000);
 });

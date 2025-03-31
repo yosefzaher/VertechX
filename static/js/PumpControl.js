@@ -32,11 +32,11 @@ document.addEventListener("DOMContentLoaded", function () {
     async function checkAutoMode() {
         try {
             const response = await axios.get("http://127.0.0.1:5000/api/get_mode");
-            autoModeEnabled = response.data.mode === "automatic";  // ✅ تعديل هنا لاستخراج mode
+            autoModeEnabled = response.data.mode === "automatic";  
         } catch (error) {
             console.error("Error checking Auto Mode status:", error);
         }
-}
+    }
 
 
     // Event listeners for manual control
@@ -66,5 +66,5 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(() => {
         checkAutoMode(); // Check if AutoMode is active
         getPumpStates(); // Fetch latest pump states
-    }, 3000);
+    }, 4000);
 });

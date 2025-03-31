@@ -1,102 +1,73 @@
-document.addEventListener("DOMContentLoaded" ,function(){
-    const valve1Toggle = document.getElementById("valve1Toggle") ;
-    const valve1Status = document.getElementById("valve1Status") ;
-    const valve2Toggle = document.getElementById("valve2Toggle") ;
-    const valve2Status = document.getElementById("valve2Status") ;
-    const valve3Toggle = document.getElementById("valve3Toggle") ;
-    const valve3Status = document.getElementById("valve3Status") ;
-    const valve4Toggle = document.getElementById("valve4Toggle") ;
-    const valve4Status = document.getElementById("valve4Status") ;
+document.addEventListener("DOMContentLoaded", function () {
+    // Valve elements
+    const valves = [
+        { toggle: document.getElementById("valve1Toggle"), status: document.getElementById("valve1Status"), num: 1 },
+        { toggle: document.getElementById("valve2Toggle"), status: document.getElementById("valve2Status"), num: 2 },
+        { toggle: document.getElementById("valve3Toggle"), status: document.getElementById("valve3Status"), num: 3 },
+        { toggle: document.getElementById("valve4Toggle"), status: document.getElementById("valve4Status"), num: 4 }
+    ];
 
-    async function getValveStates()
-    {
-        try
-        {
-            const response = await axios.get("http://127.0.0.1:8000/api/valve_states") ;
-            const {valve1_state ,valve2_state ,valve3_state ,valve4_state} = response.data ;
-            valve1Toggle.checked = valve1_state == "on" ;
-            valve2Toggle.checked = valve2_state == "on" ;
-            valve3Toggle.checked = valve3_state == "on" ;
-            valve4Toggle.checked = valve4_state == "on" ;
+    // Fetch Valve States from API
+    async function getValveStates() {
+        try {
+            const response = await axios.get("http://127.0.0.1:8000/api/valve_states");
+            const { valve1_state, valve2_state, valve3_state, valve4_state } = response.data;
+            const states = [valve1_state, valve2_state, valve3_state, valve4_state];
 
-            valve1Status.textContent = (valve1_state == "on") ? "Valve 1 is ON" : "Valve 1 is OFF" ;
-            valve2Status.textContent = (valve2_state == "on") ? "Valve 2 is ON" : "Valve 2 is OFF" ;
-            valve3Status.textContent = (valve3_state == "on") ? "Valve 3 is ON" : "Valve 3 is OFF" ;
-            valve4Status.textContent = (valve4_state == "on") ? "Valve 4 is ON" : "Valve 4 is OFF" ;
-
-        }
-        catch(error)
-        {
-            console.error("Error in Fetching Valves States : ",error) ;
-            valve1Toggle.checked = false;
-            valve2Toggle.checked = false;
-            valve3Toggle.checked = false;
-            valve4Toggle.checked = false;
+            valves.forEach((valve, index) => {
+                valve.toggle.checked = states[index] === "on";
+                valve.status.textContent = states[index] === "on" ? `Valve ${index + 1} is ON` : `Valve ${index + 1} is OFF`;
+            });
+        } catch (error) {
+            console.error("Error fetching valve states:", error);
+            valves.forEach(valve => valve.toggle.checked = false);
         }
     }
-                
-    valve1Toggle.addEventListener("change" ,async function(){
-        if(valve1Toggle.disabled) return ; //Avoid Change in automatic Mode
-        const isValve1On = valve1Toggle.checked ; // Get current toggle state
-        try
-        {
-            await axios.post("http://127.0.0.1:8000/api/valves_control", { valve_state: isValve1On ? 'on' : 'off'
-                                                                            , valve_num: 1 }); // Send control command to server
-            valve1Status.textContent = isValve1On ? "Valve 1 is ON" : "Valve 2 is OFF" ; //Update Status Text 
-        }
-        catch(error)
-        {
-            console.error("Error in Controlling Valve 1 : ",error) ;
-        }
+
+    // Handle Manual Control
+    valves.forEach(valve => {
+        valve.toggle.addEventListener("change", async function () {
+            if (valve.toggle.disabled) return;
+            const isOn = valve.toggle.checked;
+            try {
+                await axios.post("http://127.0.0.1:8000/api/valves_control", {
+                    valve_state: isOn ? "on" : "off",
+                    valve_num: valve.num
+                });
+                valve.status.textContent = isOn ? `Valve ${valve.num} is ON` : `Valve ${valve.num} is OFF`;
+            } catch (error) {
+                console.error(`Error controlling Valve ${valve.num}:`, error);
+            }
+        });
     });
 
-    valve2Toggle.addEventListener("change" ,async function(){
-        if(valve2Toggle.disabled) return ;
-        const isValve2On = valve2Toggle.checked ;
-        try
-        {
-            await axios.post("http://127.0.0.1:8000/api/valves_control" ,{valve_state : isValve2On ? 'on' : 'off' 
-                                                                          , valve_num : 2  }) ;
-            valve2Status.textContent = isValve2On ? "Valve 2 is ON" : "Valve 2 is OFF" ; //Update Status Text 
-        }
-        catch(error)
-        {
-            console.error("Error in Controlling Valve 2 : ",error) ;
-        }
+    // Unified Auto Mode Check
+    async function checkAutoMode() {
+        try {
+            const response = await axios.get("http://127.0.0.1:5000/api/get_mode");
+            const isAutoMode = response.data.mode === "automatic";
 
-    });
-
-    valve3Toggle.addEventListener("change" ,async function(){
-        if(valve3Toggle.disabled) return ;
-        const isValve3On = valve3Toggle.checked ;
-        try
-        {
-            await axios.post("http://127.0.0.1:8000/api/valves_control" ,{valve_state : isValve3On ? 'on' : 'off' 
-                                                                          , valve_num : 3  }) ;
-            valve3Status.textContent = isValve3On ? "Valve 3 is ON" : "Valve 3 is OFF" ; //Update Status Text 
+            valves.forEach(valve => {
+                valve.toggle.disabled = isAutoMode;
+                if (isAutoMode) {
+                    valve.status.textContent = "Auto Mode Active";
+                    valve.status.classList.add("auto-mode-active");
+                } else {
+                    valve.status.classList.remove("auto-mode-active");
+                }
+            });
+        } catch (error) {
+            console.error("Error checking Auto Mode status:", error);
         }
-        catch(error)
-        {
-            console.error("Error in Controlling Valve 3 : ",error) ;
-        }
+    }
 
-    });
+    // Initialize
+    getValveStates();
+    checkAutoMode();
 
-    valve4Toggle.addEventListener("change" ,async function(){
-        if(valve4Toggle.disabled) return ;
-        const isValve4On = valve4Toggle.checked ;
-        try
-        {
-            await axios.post("http://127.0.0.1:8000/api/valves_control" ,{valve_state : isValve4On ? 'on' : 'off' 
-                                                                          , valve_num : 4  }) ;
-            valve4Status.textContent = isValve4On ? "Valve 4 is ON" : "Valve 4 is OFF" ; //Update Status Text 
-        }
-        catch(error)
-        {
-            console.error("Error in Controlling Valve 4 : ",error) ;
-        }
-
-    });            
-    // Initialize Valve states on page load
-    getValveStates(); // Fetch initial states
+    // Periodically update Auto Mode status
+    setInterval(()=>{
+        checkAutoMode();
+        getValveStates();
+    }, 4000);
 });
