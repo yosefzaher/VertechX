@@ -2,9 +2,57 @@ import requests
 import time
 import threading
 import logging
+import os
+import smtplib
+import ssl
+import logging
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+# 🔹 Email Class for Sending Notifications
+class Email:
+    def __init__(self):
+        self.SMTP_SERVER = "smtp.gmail.com"
+        self.SMTP_PORT = 465
+        self.SENDER_EMAIL = os.getenv("EMAIL_USER")  # Retrieve from environment variable
+        self.SENDER_PASSWORD = os.getenv("EMAIL_PASS")  # Retrieve from environment variable
+        self.DEFAULT_RECIPIENTS = [
+            "yosefzaher496@gmail.com",  # Add default recipients here
+        ]
+
+        if not self.SENDER_EMAIL or not self.SENDER_PASSWORD:
+            logging.error("[❌] Missing EMAIL_USER or EMAIL_PASS environment variables!")
+
+    def send_email(self, subject, body, recipients=None):
+        """Send an email notification to multiple recipients"""
+        try:
+            if recipients is None:
+                recipients = self.DEFAULT_RECIPIENTS  # Use default recipients if none provided
+
+            if isinstance(recipients, str):  
+                recipients = [recipients]  # Convert single email to a list
+
+            message = MIMEMultipart()
+            message["From"] = self.SENDER_EMAIL
+            message["To"] = ", ".join(recipients)  # Join multiple recipients with a comma
+            message["Subject"] = subject
+            message.attach(MIMEText(body, "plain"))
+
+            context = ssl.create_default_context()
+            with smtplib.SMTP_SSL(self.SMTP_SERVER, self.SMTP_PORT, context=context) as server:
+                server.login(self.SENDER_EMAIL, self.SENDER_PASSWORD)
+                server.sendmail(self.SENDER_EMAIL, recipients, message.as_string())
+
+            logging.info(f"[✅] Email sent successfully to: {', '.join(recipients)}")
+    
+
+        except Exception as e:
+            logging.error(f"[❌] Error sending email: {e}")
+            
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 
 class AutoMode:
     """
@@ -36,6 +84,7 @@ class AutoMode:
         self.running = False
         self.interval = interval  # Time interval (seconds)
         self.thread = threading.Thread(target=self.run, daemon=True)
+        
 
     def start(self):
         """
@@ -136,6 +185,20 @@ class AutoMode:
                     self.control_valves(4, "off")
                 elif counter == 35 and led_state != "off":
                     self.control_led("off")
+                    status_report = f"""
+                                    🚨 **System Stopped Automatically!** 🚨  
+                                    ✅ Pump Status: Pump1 is {pump1_state.upper()}, Pump2 is {pump2_state.upper()}  
+                                    ✅ Sensor Data => Temperature : {temperature}°C, 
+                                                                Humidity : {humidity}%, 
+                                                                pH1 : {ph1}, 
+                                                                pH2 : {ph2}  
+                                    ✅ Valves State => valve1: {valve1_state.upper()}, valve2: {valve2_state.upper()},
+                                                    valve3: {valve3_state.upper()}, valve4: {valve4_state.upper()}
+                                    ✅ LED Status => LED is : {led_state.upper()}  
+                                    """  
+                    Email().send_email(
+                        subject="Auto Mode Notification 🚨🚨",
+                        body=status_report)
                     self.stop()  # Stop Auto Mode
                     logging.info("Auto Mode Stopped")
                 
