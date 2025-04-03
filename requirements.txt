@@ -97,3 +97,5 @@ wheel==0.42.0
 wsproto==1.2.0
 WTForms==3.1.1
 xdg==5
+smbus2==0.5.0
+RPi.GPIO==0.7.1

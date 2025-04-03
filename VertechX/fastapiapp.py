@@ -3,6 +3,111 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel # BaseModel for defining data models used for request/response validation
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
+import smbus2
+import RPi.GPIO as GPIO
+import time
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("greenhouse.log"),  # Save logs to a file
+        logging.StreamHandler()  # Print logs to console
+    ]
+)
+
+class VertechX:
+    def __init__(self, i2c_bus=1, sensor_address=0x5c):
+        """Initialize I2C bus and GPIO pins."""
+        self.i2c_bus = i2c_bus
+        self.address = sensor_address
+        self.bus = smbus2.SMBus(self.i2c_bus)
+
+        # GPIO Setup
+        GPIO.setmode(GPIO.BCM)
+        self.fan_pin = 17
+        self.heater_pin = 22
+        self.pump_pin = 27
+        self.low_temp_threshold = 20
+        self.high_temp_threshold = 23
+
+        GPIO.setup(self.fan_pin, GPIO.OUT)
+        GPIO.setup(self.heater_pin, GPIO.OUT)
+        GPIO.setup(self.pump_pin, GPIO.OUT)
+
+        logging.info("✅ VertechX system initialized.")
+
+    def wake_sensor(self):
+        """Wake up the I2C sensor (retry max 5 times)."""
+        for attempt in range(5):
+            try:
+                self.bus.write_i2c_block_data(self.address, 0x00, [])
+                time.sleep(0.003)
+                logging.info("✅ Sensor wake-up successful.")
+                return True
+            except IOError:
+                logging.warning(f"⚠️ Sensor wake-up attempt {attempt + 1} failed.")
+                time.sleep(0.1)
+        logging.error("❌ Sensor failed to wake up after 5 attempts.")
+        return False
+
+    def read_temperature(self):
+        """Read temperature from the sensor."""
+        if not self.wake_sensor():
+            logging.error("❌ Cannot read temperature: Sensor not responding.")
+            return None
+
+        try:
+            self.bus.write_i2c_block_data(self.address, 0x03, [0x02, 0x02])
+            time.sleep(0.015)
+            block = self.bus.read_i2c_block_data(self.address, 0, 4)
+            temperature = float((block[2] << 8) | block[3]) / 10
+            logging.info(f"🌡️ Temperature read: {temperature}°C")
+            return temperature
+        except IOError:
+            logging.error("❌ Error reading temperature!")
+            return None
+
+    def read_humidity(self):
+        """Read humidity from the sensor."""
+        if not self.wake_sensor():
+            logging.error("❌ Cannot read humidity: Sensor not responding.")
+            return None
+
+        try:
+            self.bus.write_i2c_block_data(self.address, 0x03, [0x00, 0x02])
+            time.sleep(0.015)
+            block = self.bus.read_i2c_block_data(self.address, 0, 4)
+            humidity = float((block[2] << 8) | block[3]) / 10
+            logging.info(f"💧 Humidity read: {humidity}%")
+            return humidity
+        except IOError:
+            logging.error("❌ Error reading humidity!")
+            return None
+
+    def control_fan(self, state):
+        """Turn fan ON or OFF."""
+        GPIO.output(self.fan_pin, GPIO.HIGH if state else GPIO.LOW)
+        logging.info(f"🌀 Fan {'ON' if state else 'OFF'}")
+
+    def control_heater(self, state):
+        """Turn heater ON or OFF."""
+        GPIO.output(self.heater_pin, GPIO.HIGH if state else GPIO.LOW)
+        logging.info(f"🔥 Heater {'ON' if state else 'OFF'}")
+
+    def control_pump(self, state):
+        """Turn pump ON or OFF."""
+        GPIO.output(self.pump_pin, GPIO.HIGH if state else GPIO.LOW)
+        logging.info(f"💦 Pump {'ON' if state else 'OFF'}")
+
+    def cleanup(self):
+        """Cleanup GPIO before exiting."""
+        GPIO.cleanup()
+        logging.info("♻️ GPIO cleanup done.")
+
+
 
 
 

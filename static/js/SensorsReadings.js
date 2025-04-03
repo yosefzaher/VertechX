@@ -1,3 +1,5 @@
+console.log("edjjjfjf") ;
+
 document.addEventListener("DOMContentLoaded", function() {
     const ctxTemperature = document.getElementById('temperatureChart').getContext('2d');
     const ctxHumidity = document.getElementById('humidityChart').getContext('2d');

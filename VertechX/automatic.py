@@ -9,6 +9,8 @@ import logging
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+
+
 # 🔹 Email Class for Sending Notifications
 class Email:
     def __init__(self):
