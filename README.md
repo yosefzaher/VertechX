@@ -36,11 +36,19 @@ This is a **simulation prototype** that demonstrates the user interface and cont
 - Automated control logic demonstration
 - System status monitoring
 
-### 📊 User Interface
-![Control Dashboard](static/images/Card_2.png)
+### 📊 Dashboard Interface
+![Main Dashboard](static/images/readme/Ver1.png)
 
 ### 🎮 Control Panels
-![Hardware Control](static/images/Card_3.png)
+![Control Panel](static/images/readme/Ver2.png)
+
+### 📈 Monitoring Views
+![Sensor Monitoring](static/images/readme/Ver3.png)
+![System Status](static/images/readme/Ver4.png)
+
+### 🔧 Hardware Control Unit
+![Control Unit](static/images/readme/Ver5.png)
+![Control Interface](static/images/readme/Ver6.png)
 
 ## 💻 Technology Stack
 
