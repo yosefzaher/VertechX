@@ -1,13 +1,13 @@
 # VertechX 3.0 - Vertical Farming System Prototype 🌱
 
-![VertechX Main Image](static/images/readme/Ver1.png)
+![VertechX Logo](static/images/LOGO.png)
 
 ## 🚀 Project Overview
 
-VertechX 3.0 is a **prototype** web application designed to control and monitor a vertical farming system using hydroponics technology. This project serves as a proof of concept and is not intended for production use.
+VertechX 3.0 is a **prototype** web application designed to simulate the control and monitoring of a vertical farming system. This project demonstrates the concept of automated hydroponics control through a web interface.
 
 ### ⚠️ Prototype Disclaimer
-This is a **prototype implementation** meant for demonstration and testing purposes only. It should not be used in actual vertical farming operations without substantial modifications and real-world testing.
+This is a **simulation prototype** that demonstrates the user interface and control logic. It does not include actual hardware integration or real-time sensor data. The system uses simulated values for demonstration purposes.
 
 ## 🌟 Key Features
 
@@ -17,36 +17,36 @@ This is a **prototype implementation** meant for demonstration and testing purpo
 - Account deletion
 - Secure password handling
 
-### 🎛️ Control System
-- **Dual Operation Modes**:
-  - Manual Control
-  - Automatic Control with scheduling
-- **Hardware Control**:
-  - Water Pumps
-  - Solenoid Valves
+### 🎛️ Control System Simulation
+- **Operation Modes**:
+  - Manual Mode: Direct control of simulated components
+  - Automatic Mode: Scheduled operations with simulated responses
+- **Simulated Hardware Control**:
+  - Water Pumps (2 units)
+  - Solenoid Valves (4 units)
   - LED Grow Lights
-- **Sensor Monitoring**:
-  - Temperature
-  - Humidity
-  - pH Levels
+- **Virtual Sensor Monitoring**:
+  - Temperature simulation
+  - Humidity simulation
+  - pH Levels simulation
 
-### 🤖 Automatic Mode
-- Scheduled operations
-- Email notifications
-- Automated control based on sensor readings
+### 🤖 Automatic Mode Features
+- Pre-programmed operation sequences
+- Email notifications for system events
+- Automated control logic demonstration
 - System status monitoring
 
-### 📊 Real-time Dashboard
-![Dashboard](static/images/readme/Ver3.png)
+### 📊 User Interface
+![Control Dashboard](static/images/Card_2.png)
 
-### 📱 Control Interface
-![Control Interface](static/images/readme/Ver4.png)
+### 🎮 Control Panels
+![Hardware Control](static/images/Card_3.png)
 
 ## 💻 Technology Stack
 
 - **Backend**:
   - Flask (Web Application)
-  - FastAPI (Hardware Control API)
+  - FastAPI (Control API)
   - SQLite Database
   - SQLAlchemy ORM
 - **Frontend**:
@@ -66,22 +66,14 @@ VertechX/
 │   ├── models.py      # Database models
 │   ├── routes.py      # Web routes
 │   ├── forms.py       # Form handling
-│   ├── automatic.py   # Automatic mode logic
-│   └── fastapiapp.py  # Hardware control API
+│   ├── automatic.py   # Automatic mode simulation
+│   └── fastapiapp.py  # Control API endpoints
 ├── Templates/         # HTML templates
 ├── static/           # Static files
 ├── instance/         # Instance configuration
 ├── requirements.txt  # Dependencies
 └── run.py           # Application entry point
 ```
-
-## 📸 Interface Screenshots
-
-### System Monitoring
-![Monitoring Interface](static/images/readme/Var1.png)
-
-### Control Panel
-![Control Interface](static/images/readme/Var2.png)
 
 ## 🚀 Setup Instructions
 
@@ -120,15 +112,19 @@ EMAIL_PASS=your_email_password
 - CSRF Protection
 - Session Management
 
-## 📝 Note
+## 📝 Implementation Notes
 
-This prototype demonstrates the potential of automated vertical farming systems. For production use, significant modifications would be needed, including:
+This prototype demonstrates:
+- User interface for vertical farming control
+- Simulated control logic for hydroponics systems
+- Automated operation sequences
+- System monitoring and notifications
 
-- Real hardware integration
-- Production-grade database
-- Enhanced security measures
-- Thorough testing
-- Proper deployment configuration
+Important limitations:
+- Uses simulated sensor data (not real-time)
+- No actual hardware integration
+- Simplified control logic for demonstration
+- Email notifications for demonstration purposes
 
 ## 📄 License
 
@@ -136,6 +132,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-⚠️ Remember: This is a prototype implementation and should not be used in production without proper modifications and testing.
+⚠️ Remember: This is a simulation prototype and does not include actual hardware integration or real-time sensor data.
 
    
