@@ -4,44 +4,58 @@
 
 ## 🚀 Project Overview
 
-VertechX 3.0 is a **prototype** web application designed to demonstrate the potential of automated vertical farming systems using hydroponics technology. This project serves as a proof of concept and is not intended for production use.
+VertechX 3.0 is a **prototype** web application designed to control and monitor a vertical farming system using hydroponics technology. This project serves as a proof of concept and is not intended for production use.
 
 ### ⚠️ Prototype Disclaimer
 This is a **prototype implementation** meant for demonstration and testing purposes only. It should not be used in actual vertical farming operations without substantial modifications and real-world testing.
 
 ## 🌟 Key Features
 
-- 🎛️ **Smart Control System**: Simulated monitoring and control of:
+### 👤 User Management
+- User registration and authentication
+- Profile management
+- Account deletion
+- Secure password handling
+
+### 🎛️ Control System
+- **Dual Operation Modes**:
+  - Manual Control
+  - Automatic Control with scheduling
+- **Hardware Control**:
+  - Water Pumps
+  - Solenoid Valves
+  - LED Grow Lights
+- **Sensor Monitoring**:
   - Temperature
   - Humidity
-  - pH levels
-  - Nutrient levels
-  - LED grow lights
-  - Water pumps
+  - pH Levels
 
-- 📊 **Real-time Dashboard**
-  ![Dashboard](static/images/readme/Ver3.png)
+### 🤖 Automatic Mode
+- Scheduled operations
+- Email notifications
+- Automated control based on sensor readings
+- System status monitoring
 
-- 🔐 **User Authentication System**
-  ![Login System](static/images/readme/Ver4.png)
+### 📊 Real-time Dashboard
+![Dashboard](static/images/readme/Ver3.png)
 
-- 📱 **Responsive Design**
-  ![Responsive Interface](static/images/readme/Ver5.png)
-
-- 🎯 **Sensor Integration** (Simulated)
-  ![Sensor Readings](static/images/readme/Ver6.png)
+### 📱 Control Interface
+![Control Interface](static/images/readme/Ver4.png)
 
 ## 💻 Technology Stack
 
-- **Backend**: Flask + FastAPI
-- **Frontend**: HTML5, CSS3, JavaScript, Bootstrap 5
-- **Database**: SQLite (Development)
+- **Backend**:
+  - Flask (Web Application)
+  - FastAPI (Hardware Control API)
+  - SQLite Database
+  - SQLAlchemy ORM
+- **Frontend**:
+  - HTML5
+  - CSS3
+  - JavaScript
+  - Bootstrap 5
 - **Authentication**: Flask-Login
-- **Additional Features**:
-  - Dark Mode Support
-  - Rate Limiting
-  - Error Handling
-  - Security Features
+- **Email**: SMTP Integration
 
 ## 🛠️ Project Structure
 
@@ -49,20 +63,16 @@ This is a **prototype implementation** meant for demonstration and testing purpo
 VertechX/
 ├── VertechX/
 │   ├── __init__.py
-│   ├── models.py
-│   ├── routes.py
-│   └── utils.py
-├── Templates/
-│   ├── base.html
-│   ├── dashboard.html
-│   └── errors/
-├── static/
-│   ├── css/
-│   ├── js/
-│   └── images/
-├── instance/
-├── requirements.txt
-└── run.py
+│   ├── models.py      # Database models
+│   ├── routes.py      # Web routes
+│   ├── forms.py       # Form handling
+│   ├── automatic.py   # Automatic mode logic
+│   └── fastapiapp.py  # Hardware control API
+├── Templates/         # HTML templates
+├── static/           # Static files
+├── instance/         # Instance configuration
+├── requirements.txt  # Dependencies
+└── run.py           # Application entry point
 ```
 
 ## 📸 Interface Screenshots
@@ -72,12 +82,6 @@ VertechX/
 
 ### Control Panel
 ![Control Interface](static/images/readme/Var2.png)
-
-### Data Analytics
-![Analytics Dashboard](static/images/readme/Var3.png)
-
-### Mobile View
-![Mobile Interface](static/images/readme/Var4.png)
 
 ## 🚀 Setup Instructions
 
@@ -105,41 +109,16 @@ The application uses environment variables for configuration. Create a `.env` fi
 FLASK_APP=run.py
 FLASK_ENV=development
 SECRET_KEY=your_secret_key
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_email_password
 ```
 
 ## 🛡️ Security Features
 
+- User Authentication
+- Password Hashing
 - CSRF Protection
-- Rate Limiting
-- Secure Password Hashing
-- XSS Prevention
-- SQL Injection Protection
-
-## 📱 Responsive Design
-
-The application is fully responsive and works on:
-- 💻 Desktop
-- 📱 Mobile
-- 📟 Tablets
-
-## 🌙 Dark Mode
-
-Built-in dark mode support for better visibility in low-light conditions.
-
-## ⚠️ Error Handling
-
-Custom error pages for common HTTP errors:
-- 400 Bad Request
-- 404 Not Found
-- 500 Internal Server Error
-
-## 🔄 Future Improvements
-
-1. Integration with real sensors and hardware
-2. Advanced analytics and reporting
-3. Mobile application development
-4. Machine learning for growth optimization
-5. Extended monitoring capabilities
+- Session Management
 
 ## 📝 Note
 
