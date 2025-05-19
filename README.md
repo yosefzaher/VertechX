@@ -1,120 +1,162 @@
-# VertechX - Vertical Farming System (Hydroponics)
+# VertechX 3.0 - Vertical Farming System Prototype 🌱
 
-VertechX is a **vertical farming system** based on **hydroponics technology**. It is designed to automate and optimize the growth of plants in a controlled environment. The project involves a team of software, hardware, and mechanical engineers. I was responsible for the **software development** part, which includes a **web application** and **IoT integration** for controlling the system.
-
----
+![VertechX Main Image](static/images/readme/Ver1.png)
 
 ## 🚀 Project Overview
 
-VertechX is a prototype for a smart vertical farming system. It consists of:
-- **Hardware**: Pumps, solenoid valves, sensors (pH, humidity, temperature), and a Raspberry Pi for control.
-- **Software**: A web application built with **Python Flask** and **FastAPI** for user interaction and IoT control.
-- **Mechanical**: The physical structure of the vertical farm.
+VertechX 3.0 is a **prototype** web application designed to demonstrate the potential of automated vertical farming systems using hydroponics technology. This project serves as a proof of concept and is not intended for production use.
 
-The system supports two modes:
-1. **Automatic Mode**: Fully controlled by AI (currently in the prototype stage, not implemented).
-2. **Manual Mode**: The user has full control over the system (e.g., turning pumps on/off, monitoring sensor data).
+### ⚠️ Prototype Disclaimer
+This is a **prototype implementation** meant for demonstration and testing purposes only. It should not be used in actual vertical farming operations without substantial modifications and real-world testing.
 
----
+## 🌟 Key Features
 
-## 🛠️ Technologies Used
+- 🎛️ **Smart Control System**: Simulated monitoring and control of:
+  - Temperature
+  - Humidity
+  - pH levels
+  - Nutrient levels
+  - LED grow lights
+  - Water pumps
 
-### Software
-- **Python Flask**: For user authentication, database management, and rendering templates.
-- **FastAPI**: For communication with the embedded system (Raspberry Pi) and controlling hardware components.
-- **SQLite**: Database for storing user data and system information.
-- **SQLAlchemy**: ORM for database interactions.
-- **Raspberry Pi**: For controlling pumps, solenoid valves, and reading sensor data.
+- 📊 **Real-time Dashboard**
+  ![Dashboard](static/images/readme/Ver3.png)
 
-### Hardware
-- **Sensors**:
-  - **Analog Water pH Sensor (DFRobot Gravity)**: For measuring pH levels.
-  - **AM2320**: For measuring humidity and temperature.
-- **Actuators**:
-  - **Pumps**: For water circulation.
-  - **Solenoid Valves**: For controlling water flow.
+- 🔐 **User Authentication System**
+  ![Login System](static/images/readme/Ver4.png)
 
----
+- 📱 **Responsive Design**
+  ![Responsive Interface](static/images/readme/Ver5.png)
 
-## 📂 Project Structure
-```bash
-  VertechX/
-  ├── VertechX/ # Main Flask application
-  │ ├── templates/ # HTML templates for the web app
-  │ ├── static/ # CSS, JS, and other static files
-  │ ├── models.py # Database models (SQLAlchemy)
-  │ ├── routes.py # Flask routes
-  │ ├── run.py # Flask application entry point
-  ├── fastapiapp/ # FastAPI application
-  │ ├── fastapp.py # FastAPI routes for IoT control
-  ├── venv/ # Virtual environment
-  ├── README.md # Project documentation
+- 🎯 **Sensor Integration** (Simulated)
+  ![Sensor Readings](static/images/readme/Ver6.png)
+
+## 💻 Technology Stack
+
+- **Backend**: Flask + FastAPI
+- **Frontend**: HTML5, CSS3, JavaScript, Bootstrap 5
+- **Database**: SQLite (Development)
+- **Authentication**: Flask-Login
+- **Additional Features**:
+  - Dark Mode Support
+  - Rate Limiting
+  - Error Handling
+  - Security Features
+
+## 🛠️ Project Structure
+
 ```
----
+VertechX/
+├── VertechX/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── routes.py
+│   └── utils.py
+├── Templates/
+│   ├── base.html
+│   ├── dashboard.html
+│   └── errors/
+├── static/
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── instance/
+├── requirements.txt
+└── run.py
+```
 
-## 🚀 How to Run the Project
+## 📸 Interface Screenshots
 
-### Prerequisites
-- Python 3.x
-- Raspberry Pi (for hardware control)
-- Installed libraries: `flask`, `fastapi`, `sqlalchemy`, `uvicorn`
+### System Monitoring
+![Monitoring Interface](static/images/readme/Var1.png)
 
-### Steps
-1. **Clone the Repository**:
+### Control Panel
+![Control Interface](static/images/readme/Var2.png)
+
+### Data Analytics
+![Analytics Dashboard](static/images/readme/Var3.png)
+
+### Mobile View
+![Mobile Interface](static/images/readme/Var4.png)
+
+## 🚀 Setup Instructions
+
+1. Create and activate virtual environment:
    ```bash
-   git clone https://github.com/your-username/VertechX.git
-   cd VertechX
+   python3 -m venv venv
+   source venv/bin/activate  # Linux/Mac
    ```
-2. **Activate the Virtual Environment**:
+
+2. Install dependencies:
    ```bash
-   source venv/bin/activate
+   python3 -m pip install -r requirements.txt
    ```
-3. **Run the Flask Server**:
+
+3. Run the application:
    ```bash
    python3 run.py
    ```
-   This will start the Flask web application. Open your browser and go to [http://127.0.0.1:5000]
-4. **Run the FastAPI Server**:
-   ```bash
-   cd VertechX/fastapiapp
-   uvicorn fastapp:fastapp --reload
-   ```
-   This will start the FastAPI server for IoT communication. Open your browser and go to [http://127.0.0.1:8000/docs] to see The APIs Automatic Documentation
-5. **Connect to the Raspberry Pi**:
-   Ensure the Raspberry Pi is connected to the same network and configured to communicate with the FastAPI server.
+
+## 🔧 Configuration
+
+The application uses environment variables for configuration. Create a `.env` file with:
+
+```env
+FLASK_APP=run.py
+FLASK_ENV=development
+SECRET_KEY=your_secret_key
+```
+
+## 🛡️ Security Features
+
+- CSRF Protection
+- Rate Limiting
+- Secure Password Hashing
+- XSS Prevention
+- SQL Injection Protection
+
+## 📱 Responsive Design
+
+The application is fully responsive and works on:
+- 💻 Desktop
+- 📱 Mobile
+- 📟 Tablets
+
+## 🌙 Dark Mode
+
+Built-in dark mode support for better visibility in low-light conditions.
+
+## ⚠️ Error Handling
+
+Custom error pages for common HTTP errors:
+- 400 Bad Request
+- 404 Not Found
+- 500 Internal Server Error
+
+## 🔄 Future Improvements
+
+1. Integration with real sensors and hardware
+2. Advanced analytics and reporting
+3. Mobile application development
+4. Machine learning for growth optimization
+5. Extended monitoring capabilities
+
+## 📝 Note
+
+This prototype demonstrates the potential of automated vertical farming systems. For production use, significant modifications would be needed, including:
+
+- Real hardware integration
+- Production-grade database
+- Enhanced security measures
+- Thorough testing
+- Proper deployment configuration
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
 ---
 
-## 🌟 Features
-
-### Web Application (Flask)
-- **User Authentication**: Sign up, log in, and manage user accounts.
-- **Dashboard**: Monitor sensor data (pH, humidity, temperature) and control the system.
-- **Manual Mode**: Full control over pumps and valves.
-
-### IoT Integration (FastAPI)
-- **Sensor Data**: Read real-time data from pH, humidity, and temperature sensors.
-- **Hardware Control**: Control pumps and solenoid valves via the Raspberry Pi.
-
----
-
-## 📸 Project Images
-
-### Fabrication
-<!-- Add your fabrication images here -->
-![Control Unit](https://media.licdn.com/dms/image/v2/D4D22AQHxsF4QLt7GWw/feedshare-shrink_2048_1536/B4DZSKAfglHkA4-/0/1737482174329?e=1741219200&v=beta&t=3StwCUoG-V_5fCHih1CpiM_rgp_g-PrxWGDdjjL6a_A)
-![Control Unit](https://media.licdn.com/dms/image/v2/D4D22AQH6Oa5_i2fNOQ/feedshare-shrink_2048_1536/B4DZSKbG2YHIAw-/0/1737489186738?e=1741219200&v=beta&t=8ZG6Fpa7GleDVQZZg_nE_cMjtyMOvKvP6OW6TaIp1nQ)
-
----
-
-## 📫 Contact Me
-
-If you have any questions or want to collaborate, feel free to reach out:
-- **Email**: zaheryosef72@gmail.com
-- **LinkedIn**: www.linkedin.com/in/yosef-zaher
-- **GitHub**: https://github.com/yosefzaher
-
----
-
-⭐️ Feel free to explore the repository and contribute to the project! If you find it useful, don't forget to give it a ⭐️!
+⚠️ Remember: This is a prototype implementation and should not be used in production without proper modifications and testing.
 
    
