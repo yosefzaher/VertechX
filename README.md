@@ -47,8 +47,7 @@ This is a **simulation prototype** that demonstrates the user interface and cont
 ![System Status](static/images/readme/Ver4.png)
 
 ### 🔧 Hardware Control Unit
-![Control Unit](static/images/readme/Ver5.png)
-![Control Interface](static/images/readme/Ver6.png)
+![Control Unit](static/images/readme/ControlUnit.jpeg)
 
 ## 💻 Technology Stack
 
