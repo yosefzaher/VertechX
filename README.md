@@ -39,9 +39,6 @@ This is a **simulation prototype** that demonstrates the user interface and cont
 ### 📊 Dashboard Interface
 ![Main Dashboard](static/images/readme/Ver1.png)
 
-### 🎮 Control Panels
-![Control Panel](static/images/readme/Ver2.png)
-
 ### 📈 Monitoring Views
 ![Sensor Monitoring](static/images/readme/Ver3.png)
 ![System Status](static/images/readme/Ver4.png)
